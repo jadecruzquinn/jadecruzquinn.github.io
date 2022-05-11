@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+
+body {background-image: url("https://www.yohannajessup.com/wp-content/uploads/2020/07/pinksky_bg.png");background-size:cover}
+
+body, p, td, th, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
+
+a:link    {color: #4c566a; text-decoration: none}
+a:hover   {color: #4c566a; background-color: #88C0D0; text-decoration: none}
+a:active  {color: #6F7787; text-decoration: underline}
+a:visited {color: #6F7787; text-decoration: none}
+
+.t_thin_line {background-color: black}
+.t_title_bar {background-image: url("https://www.yohannajessup.com/wp-content/uploads/2020/07/pinksky_bg.png"); font-family: IBM Plex Sans; color: #2E3440;  font-weight: bold}
+.t_header {background-image: url("https://www.yohannajessup.com/wp-content/uploads/2020/07/pinksky_bg.png"); font-family: IBM Plex Sans; color: #C0C2C5;  font-weight: bold}
+.t_info {background-color: #C0C2C5; font-family: IBM Plex Sans; color: #2E3440}
+.t_dialog {background-image: url("https://www.yohannajessup.com/wp-content/uploads/2020/07/pinksky_bg.png"); font-family: IBM Plex Sans; color: #C0C2C5}
+.t_posting {background-color: #C0C2C5; font-family: IBM Plex Sans; color: #2E3440}
+
+i {color: #333366}
+
+hr {background-color: #4c566a; border: 0px; height: 1px;}
