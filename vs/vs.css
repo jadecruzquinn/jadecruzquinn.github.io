@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
-body {background-image: url("https://jadecruzquinn.github.io/vs/pinksky_bg.png");background-size:cover; background-color: #d9c3f8;}
+body {
+	background-image: url("https://jadecruzquinn.github.io/vs/pinksky_bg.png");
+	background-size:cover;
+	background-attachment: fixed;
+	background-position: left top;
+	margin-top: 25px;
+	background-color: #d9c3f8;
+}
 
 body, p, td, th, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
 
