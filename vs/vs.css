@@ -17,8 +17,8 @@ a:visited {color: #4c566a; text-decoration: underline;}
 
 .t_thin_line {background-color: black}
 .t_title_bar {background-image: url("https://jadecruzquinn.github.io/vs/pinksky_bg.png"); font-family: IBM Plex Sans; color: #2E3440;}
-.t_header {background-color: #ffffff; opacity: 0.75; font-family: IBM Plex Sans; color: #2E3440;}
-.t_info {background-color: #ffffff; opacity: 0.75; font-family: IBM Plex Sans; color: #2E3440;}
+.t_header {background-color: #ffffff; font-family: IBM Plex Sans; color: #2E3440;}
+.t_info {color: #2E3440; font-family: IBM Plex Sans;}
 .t_dialog {background-color: #ffffff; opacity: 0.75; font-family: IBM Plex Sans; color: #2E3440;}
 .t_posting {background-color: #ffffff; opacity: 0.75; font-family: IBM Plex Sans; color: #2E3440;}
 
