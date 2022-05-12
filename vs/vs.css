@@ -4,10 +4,10 @@ body {background-image: url("https://jadecruzquinn.github.io/vs/pinksky_bg.png")
 
 body, p, td, th, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
 
-a:link    {color: #4c566a; text-decoration: none}
-a:hover   {color: #4c566a; text-decoration: none}
+a:link    {color: #4c566a; text-decoration: underline}
+a:hover   {color: #4c566a; text-decoration: underline}
 a:active  {color: #4c566a; text-decoration: underline}
-a:visited {color: #4c566a; text-decoration: none}
+a:visited {color: #4c566a; text-decoration: underline}
 
 .t_thin_line {background-color: black}
 .t_title_bar {background-image: url("https://jadecruzquinn.github.io/vs/pinksky_bg.png"); font-family: IBM Plex Sans; color: #2E3440;}
