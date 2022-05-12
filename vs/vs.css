@@ -6,8 +6,7 @@ body {
 	background-attachment: fixed;
 	background-position: left top;
 	margin-top: 25px;
-	background-color: #d9c3f8;
-}
+	background-color: #d9c3f8;}
 
 body, p, td, th, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
 
@@ -26,3 +25,31 @@ a:visited {color: #4c566a; text-decoration: underline;}
 i {color: #D8DEE9;}
 
 hr {background-color: #4c566a; border: 0px; height: 1px;}
+
+.urgent_emphasis {font-weight: bold; color: red; }
+.urgent_emphasis A:link {font-weight: bold; color: red; }
+.urgent_emphasis A:visited {font-weight: bold; color: red; }
+
+blockquote.vs_quote {margin:20px;background-color:white;padding: 12px;border-left: 3px solid #666;clear:both;font-size:80%}
+blockquote .vs_quote_author {padding-bottom:14px;font-weight:bold;font-style:normal}
+
+#selectionSharerPopover-inner {
+  border-radius: 5px;
+  border: 10px solid;
+  border-color: white;
+  background-color: white;
+  background-repeat: repeat-x;}
+
+#selectionSharerPopover:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background: white;
+  box-shadow: 0 0 2px white;}
