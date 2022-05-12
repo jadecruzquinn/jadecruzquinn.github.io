@@ -26,9 +26,9 @@ i {color: #D8DEE9;}
 
 hr {background-color: #4c566a; border: 0px; height: 1px;}
 
-.urgent_emphasis {font-weight: bold; color: red; }
-.urgent_emphasis A:link {font-weight: bold; color: red; }
-.urgent_emphasis A:visited {font-weight: bold; color: red; }
+.urgent_emphasis {font-weight: bold; color: #d9c3f8;}
+.urgent_emphasis A:link {font-weight: bold; color: #d9c3f8;}
+.urgent_emphasis A:visited {font-weight: bold; color: #d9c3f8;}
 
 blockquote.vs_quote {margin:20px;background-color:white;padding: 12px;border-left: 3px solid #666;clear:both;font-size:80%}
 blockquote .vs_quote_author {padding-bottom:14px;font-weight:bold;font-style:normal}
