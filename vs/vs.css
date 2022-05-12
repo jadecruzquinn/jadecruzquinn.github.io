@@ -8,7 +8,7 @@ body {
 	margin-top: 25px;
 	background-color: #d9c3f8;}
 
-body, p, td, th, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
+body, p, td, th, tr, h1, h2, h3, h4, h5, h6, h7 {color: #2E3440; font-family: IBM Plex Sans;}
 
 a:link    {color: #4c566a; text-decoration: underline;}
 a:hover   {color: #4c566a; text-decoration: underline;}
