@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expert 365 Business—Dashboard</title>
+  <link rel="stylesheet" href="prototype.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Primary">
+      <div class="sidebar__brand">
+        <img class="sidebar__logo" src="logo.svg" alt="Expert 365 Business" />
+      </div>
+      <nav class="sidebar__nav">
+        <a href="#" class="nav-item nav-item--active js-main-nav" data-main-view="dashboard" aria-current="page">Expert 365 Business</a>
+        <a href="#" class="nav-item js-main-nav" data-main-view="documents">Documents</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="#" class="sidebar__signout">Sign out</a>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <div class="mobile-top-bar">
+        <img class="mobile-top-bar__logo" src="logo.svg" alt="Expert 365 Business" />
+      </div>
+      <header class="header">
+        <div class="header__actions">
+          <div class="state-switcher" role="group" aria-label="Workflow">
+            <button type="button" class="state-switcher__btn is-active" data-state="onboarding" aria-pressed="true">Onboarding</button>
+            <button type="button" class="state-switcher__btn" data-state="welcomeCall" aria-pressed="false">Welcome call</button>
+            <button type="button" class="state-switcher__btn" data-state="taxFiling" aria-pressed="false">Tax filing</button>
+            <button type="button" class="state-switcher__btn" data-state="subscriptionExpired" aria-pressed="false">Subscription expired</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div id="dashboard-view" class="main-view" data-workflow-state="onboarding">
+        <div class="dashboard-default">
+        <h1 class="welcome">Welcome, Junxy Coffee</h1>
+
+        <div class="dashboard-grid" data-workflow-state="onboarding">
+          <div class="dashboard-grid__col">
+            <div class="left-col-panel left-col-panel--onboarding">
+              <article class="card card--hero">
+                <div class="card__illustration-wrap">
+                  <img
+                    class="card__illustration"
+                    src="expert-photo.png"
+                    alt="Your expert"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="card__body card__body--center">
+                  <h2 class="card__title card__title--large">Start with a welcome call</h2>
+                  <p class="card__text">Meet your expert and finish setting up your account.</p>
+                  <button type="button" class="btn btn--primary js-connect-drawer-open">Set up a call</button>
+                </div>
+              </article>
+
+              <article class="card card--compact">
+                <div class="card__body card__body--center">
+                  <p class="card__text">Import, upload, or view your docs.</p>
+                  <button type="button" class="btn btn--secondary js-go-docs">Go to docs</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="left-col-panel left-col-panel--expert-welcome">
+              <article class="card card--hero">
+                <div class="card__illustration-wrap">
+                  <img
+                    class="card__illustration"
+                    src="expert-photo.png"
+                    alt="Your expert"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="card__body card__body--center">
+                  <h2 class="card__title card__title--large">It's almost time for your call</h2>
+                  <p class="card__text">You'll get a notification when it's time to join the call.</p>
+                  <button type="button" class="btn btn--hero-outline js-connect-drawer-open">Reschedule</button>
+                </div>
+              </article>
+
+              <article class="card card--compact">
+                <div class="card__body card__body--center">
+                  <p class="card__text">Import, upload, or view your docs.</p>
+                  <button type="button" class="btn btn--secondary js-go-docs">Go to docs</button>
+                </div>
+              </article>
+            </div>
+
+            <div class="left-col-panel left-col-panel--expert">
+              <article class="card card--hero">
+                <div class="card__illustration-wrap">
+                  <img
+                    class="card__illustration"
+                    src="expert-photo.png"
+                    alt="Your expert"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="card__body card__body--center">
+                  <h2 class="card__title card__title--large">Talk to your expert anytime</h2>
+                  <p class="card__text">Ask your expert a question, or they'll reach out via chat if they have questions for you.</p>
+                  <button type="button" class="btn btn--expert-chat">Chat with your expert</button>
+                  <a href="#" class="card__hero-schedule-link js-connect-drawer-open">Schedule a call</a>
+                </div>
+              </article>
+
+              <article class="card card--compact">
+                <div class="card__body card__body--center">
+                  <p class="card__text">Import, upload, or view your docs.</p>
+                  <button type="button" class="btn btn--secondary js-go-docs">Go to docs</button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="dashboard-grid__col">
+            <div class="info-banner">
+              <span class="info-banner__icon" aria-hidden="true">
+                <img src="icons/info.svg" alt="" width="24" height="24" />
+              </span>
+              <div class="info-banner__copy">
+                <p class="info-banner__title">You can schedule a welcome call before you pay.</p>
+                <p class="info-banner__text">Talk with an expert to make sure it’s right for you, then get started for $99/mo.</p>
+                <a href="#" class="link">Add a card</a>
+              </div>
+            </div>
+
+            <div class="right-column-tasks">
+              <div id="js-task-cards" class="task-list" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="learn" aria-labelledby="learn-heading">
+          <h2 id="learn-heading" class="section-heading">Learn about Expert 365 Business</h2>
+          <div class="learn__row">
+            <article class="mini-card mini-card--learn-tax">
+              <div class="mini-card__icon-wrap">
+                <img class="mini-card__icon" src="icons/offers.svg" alt="" width="32" height="32" />
+              </div>
+              <div class="mini-card__body">
+                <h3 class="mini-card__title">What is tax planning?</h3>
+                <p class="mini-card__text">Plan for your business's future with your expert, at no extra cost.</p>
+                <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="tax" style="display:inline-flex; align-items:center; gap:4px;">Learn more <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
+              </div>
+            </article>
+            <article class="mini-card mini-card--learn-started">
+              <div class="mini-card__icon-wrap">
+                <img class="mini-card__icon" src="icons/expert.svg" alt="" width="32" height="32" />
+              </div>
+              <div class="mini-card__body">
+                <h3 class="mini-card__title">Getting started</h3>
+                <p class="mini-card__text">Your expert is your resource for everything you need. Here's how to get started.</p>
+                <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="started" style="display:inline-flex; align-items:center; gap:4px;">What's next <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
+              </div>
+            </article>
+            <article class="mini-card mini-card--learn-included">
+              <div class="mini-card__icon-wrap">
+                <img class="mini-card__icon" src="icons/tag.svg" alt="" width="32" height="32" />
+              </div>
+              <div class="mini-card__body">
+                <h3 class="mini-card__title">What's included</h3>
+                <p class="mini-card__text">Here's everything you get in your Expert 365 Business subscription.</p>
+                <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="included" style="display:inline-flex; align-items:center; gap:4px;">See all benefits <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
+              </div>
+            </article>
+          </div>
+        </section>
+        </div>
+
+        <div id="subscription-expired-panel" class="subscription-expired-panel" hidden>
+          <h1 class="welcome">Welcome, Junxy Coffee</h1>
+          <div class="subscription-expired-grid">
+            <div class="subscription-expired-grid__col">
+              <article class="card card--hero">
+                <div class="card__illustration-wrap">
+                  <img
+                    class="card__illustration"
+                    src="expert-photo.png"
+                    alt="Your expert"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="card__body card__body--center">
+                  <h2 class="card__title card__title--large">Activate your subscription</h2>
+                  <p class="card__text">Starting at $99/mo, you'll get tax planning, books, and taxes done for you. No commitment, cancel anytime.</p>
+                  <button type="button" class="btn btn--primary js-connect-drawer-open">Subscribe now</button>
+                  <a href="#" class="link subscription-expired-help-link js-connect-drawer-open">Need help? Talk to an expert</a>
+                </div>
+              </article>
+              <article class="card card--compact">
+                <div class="card__body card__body--center">
+                  <p class="card__text">You can still view any docs you uploaded.</p>
+                  <button type="button" class="btn btn--secondary js-go-docs">Go to docs</button>
+                </div>
+              </article>
+            </div>
+            <div class="subscription-expired-grid__col">
+              <div class="subscription-expired-alert" role="alert">
+                <span class="subscription-expired-alert__icon" aria-hidden="true">
+                  <img src="icons/alert-fill.svg" alt="" width="20" height="20" />
+                </span>
+                <div class="subscription-expired-alert__copy">
+                  <p class="subscription-expired-alert__title">Your subscription is inactive.</p>
+                  <p class="subscription-expired-alert__text">Add or update your card to continue your subscription.</p>
+                  <a href="#" class="link">Update billing info</a>
+                </div>
+              </div>
+              <h2 class="section-heading">Continue filing your taxes</h2>
+              <article class="subscription-expired-promo-card subscription-expired-cards">
+                <div style="display:flex; align-items:center; height:28px;">
+                  <img class="subscription-expired-promo-card__logo" src="turbotax.svg" alt="" style="height:28px !important; width:auto !important; display:block !important;" />
+                </div>
+                <p class="subscription-expired-promo-card__title">Get your taxes done with Expert Full Service Business</p>
+                <p class="subscription-expired-promo-card__body">An expert preps, signs, and files your taxes—with audit protection included at no extra cost.</p>
+                <a href="#" class="subscription-expired-promo-card__link">Start filing ›</a>
+              </article>
+              <article class="subscription-expired-promo-card subscription-expired-cards">
+                <div style="display:flex; align-items:center; height:28px;">
+                  <img class="subscription-expired-promo-card__logo" src="quickbooks.svg" alt="" style="height:24px !important; width:auto !important; display:block !important;" />
+                </div>
+                <p class="subscription-expired-promo-card__title">Automate your bookkeeping with QuickBooks Online</p>
+                <p class="subscription-expired-promo-card__body">Keep tabs on your business, track expenses, and get paid faster.</p>
+                <a
+                  href="https://accounts.intuit.com/app/sign-in?app_group=QBO&amp;asset_alias=Intuit.accounting.core.qbowebapp&amp;intent=qbo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="subscription-expired-promo-card__link"
+                  >Get started ›</a>
+              </article>
+            </div>
+          </div>
+
+          <section class="subscription-expired-faq" aria-labelledby="subexp-faq-heading">
+            <h2 id="subexp-faq-heading" class="subscription-expired-faq__heading">Frequently asked questions</h2>
+            <div class="subscription-expired-faq__list">
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q0" aria-controls="subexp-faq-a0">
+                  <span class="subscription-expired-faq-item__question">What is Expert 365 Business?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a0" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q0" hidden>
+                  <p>Expert 365 Business is a year-round tax and bookkeeping solution powered by TurboTax Live Business and QuickBooks Live. Tailored for businesses, Expert 365 Business provides ongoing bookkeeping, year-end tax filing and tax planning. A dedicated expert partners with our business customers to manage tedious work like bookkeeping and tax prep while identifying future tax-saving opportunities and providing on-going tax guidance.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q1" aria-controls="subexp-faq-a1">
+                  <span class="subscription-expired-faq-item__question">Who is eligible for Expert 365 Business?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a1" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q1" hidden>
+                  <p>We support sole proprietorships and single-member LLCs. The service is coming soon for C-Corps, S-Corps, partnerships, and existing QuickBooks customers. Feel free to reach out to one of our experts today to learn more.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q2" aria-controls="subexp-faq-a2">
+                  <span class="subscription-expired-faq-item__question">How is Expert 365 Business different from a traditional CPA firm or other online accounting services?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a2" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q2" hidden>
+                  <p>We've learned that every business has its unique way of working with accountants or managing financial needs. Expert 365 Business was designed to be a comprehensive, year-round solution for tax needs — from accurate bookkeeping, to tax preparation, and proactive tax advisory. For many small businesses, cost is often a deciding factor when it comes to working with accountants. That's why we're proud to offer our services for just $99/month for Sole Proprietors and LLCs, making year-round accounting more accessible than ever before. At the heart of it all is having a dedicated partner who truly understands your business and goals.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q3" aria-controls="subexp-faq-a3">
+                  <span class="subscription-expired-faq-item__question">How does Expert 365 Business help me optimize my taxes and save money?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a3" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q3" hidden>
+                  <p>In addition to maintaining accurate books, our experts will proactively identify opportunities throughout the year to minimize your overall tax burden and provide tax planning guidance to ensure you get the best possible tax outcome.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q4" aria-controls="subexp-faq-a4">
+                  <span class="subscription-expired-faq-item__question">What is included in Expert 365 Business?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a4" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q4" hidden>
+                  <p>Expert 365 Business is an integrated solution for your tax and bookkeeping needs, including year-end tax filing and year-round tax compliance. This includes quarterly tax estimates, and does not include sales and payroll taxes. The service also includes expert-led proactive tax advisory reviews, and accurate and up-to-date bookkeeping on a quarterly basis. You get unlimited year-round access to your expert to ask questions and ensure you stay on track.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q5" aria-controls="subexp-faq-a5">
+                  <span class="subscription-expired-faq-item__question">How do I know my expert is qualified?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a5" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q5" hidden>
+                  <p>Our tax experts have an average of 16 years of experience. When you connect with a business tax expert, you'll be able to see their specific credentials and experience. Our tax experts stand by their work and proudly offer personalized service. Every return filed with TurboTax Live Assisted Business through Expert 360 Business is backed by our Expert Approved Guarantee.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q6" aria-controls="subexp-faq-a6">
+                  <span class="subscription-expired-faq-item__question">Do I get a dedicated expert for my bookkeeping and tax needs?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a6" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q6" hidden>
+                  <p>Yes! We will match you with a dedicated expert across bookkeeping and tax, serving as a trusted advisor as you grow your business.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q7" aria-controls="subexp-faq-a7">
+                  <span class="subscription-expired-faq-item__question">How often can I meet with my expert?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a7" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q7" hidden>
+                  <p>You have unlimited year-round access to your expert for your tax filing, bookkeeping, and tax advisory needs. Your dedicated expert will also schedule your quarterly advisory session to review what's changed in your business, books, and tax planning recommendations.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q8" aria-controls="subexp-faq-a8">
+                  <span class="subscription-expired-faq-item__question">What types of tax help can I get?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a8" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q8" hidden>
+                  <p>In addition to filing your year-end taxes, our experts will help you with quarterly tax estimates and remain available year-round to assist with any tax questions you might have. Importantly, your dedicated expert will provide proactive and personalized tax recommendations such as a business entity evaluation to minimize your tax burden.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q9" aria-controls="subexp-faq-a9">
+                  <span class="subscription-expired-faq-item__question">Does Expert 365 Business provide support in case of an IRS audit?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a9" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q9" hidden>
+                  <p>We've got you covered. If by chance you are audited, a dedicated expert will represent you and communicate with the IRS or state agencies on your behalf, at no extra cost. Learn more about audit defense <a href="https://turbotax.intuit.com/corp/fullauditrepresentation/" target="_blank" style="color:#205ea3;font-weight:600;text-decoration:underline;">here</a>.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q10" aria-controls="subexp-faq-a10">
+                  <span class="subscription-expired-faq-item__question">How can I communicate with my expert and what are the typical response times?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a10" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q10" hidden>
+                  <p>Experts are available to connect via phone, text chat, or live virtually, year-round. If your expert can't respond right away, you will get a response within 48 hours.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q11" aria-controls="subexp-faq-a11">
+                  <span class="subscription-expired-faq-item__question">What is the cost of Expert 360 Business?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a11" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q11" hidden>
+                  <p>$0 for the first 30 days and then $99/month. The service for Incorporated businesses will be at a higher monthly price. Please check back on March 15, 2026.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q12" aria-controls="subexp-faq-a12">
+                  <span class="subscription-expired-faq-item__question">What is the cancellation policy?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a12" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q12" hidden>
+                  <p>You can cancel your Expert 365 Business service anytime at no cost.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q13" aria-controls="subexp-faq-a13">
+                  <span class="subscription-expired-faq-item__question">What if I am an existing QuickBooks user?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a13" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q13" hidden>
+                  <p>Unfortunately, Expert 360 Business is not currently available for existing QuickBooks customers. Please check back in as we expand our capabilities!</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q14" aria-controls="subexp-faq-a14">
+                  <span class="subscription-expired-faq-item__question">Can Expert 365 Business help me transition from my current accountant or bookkeeping service?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a14" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q14" hidden>
+                  <p>Your expert will help you set up your account, transfer your books, and bring them up to date.</p>
+                </div>
+              </div>
+              <div class="subscription-expired-faq-item">
+                <button type="button" class="subscription-expired-faq-item__trigger" aria-expanded="false" id="subexp-faq-q15" aria-controls="subexp-faq-a15">
+                  <span class="subscription-expired-faq-item__question">What if my bookkeeping is behind or my financial records are disorganized?</span>
+                  <span class="subscription-expired-faq-item__chevron" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div id="subexp-faq-a15" class="subscription-expired-faq-item__answer" role="region" aria-labelledby="subexp-faq-q15" hidden>
+                  <p>It's why we launched Expert 365 Business! When you meet with your expert, they will understand where you stand and explain their approach to getting you back on track.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        </div>
+
+        <section id="documents-view" class="documents-page main-view" hidden aria-labelledby="documents-page-title">
+          <input type="file" id="js-docs-file-input" class="docs-file-input" multiple tabindex="-1" aria-hidden="true" />
+          <div class="documents-page__inner">
+            <h1 id="documents-page-title" class="documents-page__title">How do you want to add your docs?</h1>
+            <div class="docs-dropzone" role="button" tabindex="0" aria-label="Upload documents">
+              <img class="docs-dropzone__icon" src="icons/document.svg" alt="" width="24" height="24" />
+              <p class="docs-dropzone__text">
+                Drop docs here or <a href="#" class="link js-docs-browse">browse</a>
+              </p>
+            </div>
+            <div class="docs-options">
+              <article class="docs-option-card">
+                <img src="icons/document.svg" alt="" width="28" height="28" />
+                <div class="docs-option-card__text">
+                  <div class="docs-option-card__title">Import</div>
+                  <p class="docs-option-card__desc">From financial or payroll accounts</p>
+                </div>
+                <button type="button" class="btn btn--primary docs-option-card__start" onclick="showDashboard()">Start</button>
+              </article>
+              <article class="docs-option-card">
+                <img src="icons/video-call.svg" alt="" width="28" height="28" />
+                <div class="docs-option-card__text">
+                  <div class="docs-option-card__title">Snap a photo</div>
+                  <p class="docs-option-card__desc">Of paper docs</p>
+                </div>
+                <button type="button" class="btn btn--primary docs-option-card__start" onclick="showDashboard()">Start</button>
+              </article>
+            </div>
+            <div style="width:100%;max-width:844px;margin:0 auto;padding:0 10px;box-sizing:border-box;border-top:1px solid #d5dee3;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 0;">
+                <button onclick="showDashboard()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:20px; font-weight:600; color:#205ea3; padding:10px; display:flex; align-items:center; gap:4px;">
+                  <img src="icons/chevron-left.svg" width="24" height="24" alt="" style="display:block; filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%);" />
+                  Back
+                </button>
+                <button onclick="showDashboard()" style="background:#205ea3; color:white; border:none; border-radius:4px; cursor:pointer; font-family:inherit; font-size:20px; font-weight:600; padding:10px 24px;">
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <nav class="footer__links" aria-label="Legal">
+            <a href="#">License Agreement</a>
+            <span class="footer__sep" aria-hidden="true">|</span>
+            <a href="#">Privacy</a>
+            <span class="footer__sep" aria-hidden="true">|</span>
+            <a href="#">Security</a>
+            <span class="footer__sep" aria-hidden="true">|</span>
+            <a href="#">Cobrowse</a>
+          </nav>
+          <p class="footer__copy">© 2025 Intuit Inc. All rights reserved</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <div id="connect-drawer" class="connect-drawer" aria-hidden="true">
+    <div class="connect-drawer__scrim" data-connect-drawer-dismiss tabindex="-1" aria-hidden="true"></div>
+    <div
+      class="connect-drawer__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="connect-drawer-title"
+    >
+      <div class="connect-drawer__header">
+        <button type="button" class="connect-drawer__close" data-connect-drawer-dismiss aria-label="Close">×</button>
+      </div>
+      <div class="connect-drawer__body">
+        <h2 id="connect-drawer-title" class="connect-drawer__heading">How would you like to connect with us?</h2>
+        <div class="connect-drawer__cards">
+          <article class="connect-option-card">
+            <div class="connect-option-card__main">
+              <h3 class="connect-option-card__title">Callback</h3>
+              <p class="connect-option-card__text">We'll save your spot in line and call you back.</p>
+              <button type="button" class="btn btn--primary connect-option-card__btn" onclick="closeCallModal()">Have us call you</button>
+              <p class="connect-option-card__meta">
+                <svg class="connect-option-card__clock" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <span>Wait time 5 mins</span>
+              </p>
+            </div>
+            <div class="connect-option-card__icon-box">
+              <img src="icons/video-call.svg" alt="" width="32" height="32" />
+            </div>
+          </article>
+          <article class="connect-option-card">
+            <div class="connect-option-card__main">
+              <h3 class="connect-option-card__title">Appointment</h3>
+              <p class="connect-option-card__text">Pick a time that's best for you.</p>
+              <button type="button" class="btn btn--primary connect-option-card__btn" onclick="closeCallModal()">Schedule appointment</button>
+            </div>
+            <div class="connect-option-card__icon-box">
+              <img src="icons/calendar.svg" alt="" width="32" height="32" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="learn-panels" class="learn-panels" aria-hidden="true">
+    <div class="learn-panel__scrim" data-learn-panel-dismiss tabindex="-1" aria-hidden="true"></div>
+
+    <aside
+      class="learn-panel"
+      id="learn-panel-started"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="learn-panel-started-title"
+      aria-hidden="true"
+    >
+      <div class="learn-panel__header">
+        <div class="learn-panel__header-top">
+          <button type="button" class="learn-panel__close" data-learn-panel-dismiss aria-label="Close">×</button>
+        </div>
+        <div class="learn-panel__search" role="search">
+          <svg class="learn-panel__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            class="learn-panel__search-input"
+            placeholder="Search questions, keywords or topics"
+            aria-label="Search questions, keywords or topics"
+          />
+        </div>
+      </div>
+      <div class="learn-panel__content">
+        <h2 id="learn-panel-started-title" class="learn-panel__title">Getting started with Expert 365 Business</h2>
+        <h3 class="learn-panel__subheading">Start with your welcome call</h3>
+        <p class="learn-panel__text">You'll get matched with an expert who will finish setting up your account and give you an orientation of what's to come.</p>
+        <h3 class="learn-panel__subheading">Connect your bank account to automatically import your transactions</h3>
+        <p class="learn-panel__text">This is how your expert manages your books. If your bank isn't listed, your expert can help you import your transactions another way.</p>
+        <h3 class="learn-panel__subheading">Your expert reviews your books on an ongoing basis</h3>
+        <p class="learn-panel__text">They'll take on the monthly management of your books and review your transactions to keep your books up-to-date.</p>
+        <h3 class="learn-panel__subheading">Keep up with your quarterly check-ins</h3>
+        <p class="learn-panel__text">Every quarter, we'll let you know when it's time to meet with your expert to get the latest on your quarterly tax estimates and the info you need.</p>
+        <h3 class="learn-panel__subheading">Connect with your expert anytime</h3>
+        <p class="learn-panel__text">You've got questions? They've got answers. They can run detailed reports to give you a clear view of your business and connect when it's convenient for you, even on nights and weekends.</p>
+        <h3 class="learn-panel__subheading">Get ongoing guidance and reports</h3>
+        <p class="learn-panel__text">Our experts want to make sure you have the info you need to make informed decisions and feel confident at tax time.</p>
+        <h3 class="learn-panel__subheading">File year-end taxes</h3>
+        <p class="learn-panel__text">Your expert will review and confirm everything with you before filing.</p>
+      </div>
+    </aside>
+
+    <aside
+      class="learn-panel learn-panel--included"
+      id="learn-panel-included"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="learn-panel-included-title"
+      aria-hidden="true"
+    >
+      <div class="learn-panel__header">
+        <div class="learn-panel__header-top">
+          <button type="button" class="learn-panel__close" data-learn-panel-dismiss aria-label="Close">×</button>
+        </div>
+        <div class="learn-panel__search" role="search">
+          <svg class="learn-panel__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            class="learn-panel__search-input"
+            placeholder="Search questions, keywords or topics"
+            aria-label="Search questions, keywords or topics"
+          />
+        </div>
+      </div>
+      <div class="learn-panel__content">
+        <h2 id="learn-panel-included-title" class="learn-panel__title">What does Expert 365 Business include?</h2>
+        <p class="learn-panel__text">Here's everything you get for $99/mo:</p>
+        <h3 class="learn-panel__subheading">Bookkeeping powered by QuickBooks</h3>
+        <p class="learn-panel__text">
+          Once you've connected your accounts, your expert will keep your books up-to-date and ready for tax time.
+        </p>
+        <h3 class="learn-panel__subheading">Tax planning services</h3>
+        <p class="learn-panel__text">
+          Personalized planning includes a roadmap of actionable steps to save on taxes, including evaluating what entity type is optimal for tax savings.
+        </p>
+        <h3 class="learn-panel__subheading">Year-end tax filing</h3>
+        <p class="learn-panel__text">
+          Your expert will walk you through your return, file for you, and get your best outcome possible, guaranteed.
+        </p>
+        <h3 class="learn-panel__subheading">Unlimited access to QuickBooks Simple Start</h3>
+        <p class="learn-panel__text">
+          See what your expert sees. You can also pull detailed reports yourself to monitor your business or prepare any questions for your expert.
+        </p>
+      </div>
+    </aside>
+
+    <aside
+      class="learn-panel"
+      id="learn-panel-tax"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="learn-panel-tax-title"
+      aria-hidden="true"
+    >
+      <div class="learn-panel__header">
+        <div class="learn-panel__header-top">
+          <button type="button" class="learn-panel__close" data-learn-panel-dismiss aria-label="Close">×</button>
+        </div>
+        <div class="learn-panel__search" role="search">
+          <svg class="learn-panel__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            class="learn-panel__search-input"
+            placeholder="Search questions, keywords or topics"
+            aria-label="Search questions, keywords or topics"
+          />
+        </div>
+      </div>
+      <div class="learn-panel__content">
+        <h2 id="learn-panel-tax-title" class="learn-panel__title">Tax planning services</h2>
+        <p class="learn-panel__text">
+          Tax planning services are a core feature of Expert 365 Business. You can schedule a consult anytime at no extra cost or wait for your quarterly check-in to explore your tax plan.
+        </p>
+        <p class="learn-panel__text">Benefits include:</p>
+        <h3 class="learn-panel__subheading">Personalized planning</h3>
+        <p class="learn-panel__text">Your expert will develop a plan based on your industry and business goals to decrease your liabilities and direct more revenue toward your bottom line.</p>
+        <h3 class="learn-panel__subheading">Implementation roadmap</h3>
+        <p class="learn-panel__text">You'll get a checklist of actionable steps to implement your tax savings plan so you always know what's on the horizon.</p>
+        <h3 class="learn-panel__subheading">Entity and business structure guidance</h3>
+        <p class="learn-panel__text">Your expert knows how to optimize your entity structure for tax savings. This means knowing when it's time to switch to an S-corp, LLC, or other entity type for maximum savings.</p>
+        <h3 class="learn-panel__subheading">Industry expertise</h3>
+        <p class="learn-panel__text">Your expert can identify specific tax breaks for your industry.</p>
+      </div>
+    </aside>
+  </div>
+
+  <script src="prototype.js"></script>
+</body>
+</html>
