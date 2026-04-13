@@ -523,7 +523,7 @@ a:hover {
 
 .info-banner__title {
   margin: 0 0 4px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 20px;
   color: var(--text-primary);
@@ -531,10 +531,15 @@ a:hover {
 
 .info-banner__text {
   margin: 0 0 16px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 20px;
   color: var(--text-primary);
+}
+
+.info-banner .link,
+.info-banner a {
+  font-size: 16px;
 }
 
 .link {
@@ -550,6 +555,11 @@ a:hover {
   gap: 2px;
   font-size: 16px;
   line-height: 24px;
+  text-decoration: none;
+}
+
+.link--inline:hover {
+  text-decoration: none;
 }
 
 .link__arrow {
@@ -673,8 +683,8 @@ a:hover {
 }
 
 .badge--optional {
-  background: var(--ui-beta);
-  color: var(--text-inverse);
+  background-color: #00828d;
+  color: #ffffff;
 }
 
 .badge--upcoming {
@@ -690,39 +700,35 @@ a:hover {
 }
 
 .expandable__chevron {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   width: 24px;
   height: 24px;
+  background-image: url("icons/chevron-down.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: transform 0.25s ease;
 }
 
-.expandable__chevron::before {
-  content: "";
-  display: block;
-  width: 8px;
-  height: 8px;
-  margin-top: -4px;
-  border-right: 2px solid var(--text-primary);
-  border-bottom: 2px solid var(--text-primary);
-  transform: rotate(45deg);
-  transition: transform 0.2s ease;
-}
-
-.expandable.is-expanded .expandable__chevron::before {
-  margin-top: 2px;
-  transform: rotate(-135deg);
+.expandable.is-expanded .expandable__chevron {
+  background-image: url("icons/chevron-up.svg");
 }
 
 .expandable__panel {
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--container-border-primary);
-  background: var(--container-bg-primary);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.15s ease-in;
+  display: block !important;
+  border-top: 0;
 }
 
-.expandable__panel[hidden] {
-  display: none;
+.expandable.is-expanded .expandable__panel {
+  max-height: 1000px;
+  transition: max-height 0.3s ease-out;
+  border-top: 1px solid var(--container-border-primary);
+}
+
+.expandable.is-collapsed .expandable__panel {
+  transition: max-height 0.15s ease-in;
 }
 
 .expandable__panel-inner {
@@ -732,9 +738,9 @@ a:hover {
 
 .expandable__panel-text {
   margin: 0 0 16px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 24px;
   color: var(--text-primary);
 }
 
@@ -754,20 +760,22 @@ a:hover {
   text-align: center;
   color: #205ea3;
   background: #ffffff;
-  border: 1.5px solid #205ea3;
+  border: 2px solid #205ea3;
   border-radius: 4px;
   box-shadow: none;
   cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease;
 }
 
-.btn--outline:hover {
-  background: var(--container-bg-info);
-}
-
-.btn--outline:focus-visible {
-  outline: 2px solid var(--link);
-  outline-offset: 2px;
+.btn--outline:hover,
+.btn--outline:focus,
+.btn--outline:focus-visible,
+.btn--outline:active {
+  background: #ffffff;
+  color: #205ea3;
+  border-color: #205ea3;
+  box-shadow: none;
+  outline: none;
+  opacity: 1;
 }
 
 /* ——— QuickBooks promo card ——— */
@@ -1478,11 +1486,13 @@ body.connect-drawer-open {
   z-index: 200;
   visibility: hidden;
   pointer-events: none;
+  transition: visibility 0s linear 0.25s;
 }
 
 .connect-drawer.connect-drawer--open {
   visibility: visible;
   pointer-events: auto;
+  transition: visibility 0s;
 }
 
 .connect-drawer__scrim {
@@ -1490,7 +1500,6 @@ body.connect-drawer-open {
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.25s ease;
 }
 
 .connect-drawer--open .connect-drawer__scrim {
@@ -1510,7 +1519,6 @@ body.connect-drawer-open {
   background: var(--container-bg-primary);
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
-  transition: transform 0.25s ease;
   box-sizing: border-box;
 }
 
@@ -1660,11 +1668,13 @@ body.learn-panels-open {
   z-index: 210;
   pointer-events: none;
   visibility: hidden;
+  transition: visibility 0s linear 0.25s;
 }
 
 .learn-panels.learn-panels--open {
   pointer-events: auto;
   visibility: visible;
+  transition: visibility 0s;
 }
 
 .learn-panel__scrim {
@@ -1673,7 +1683,6 @@ body.learn-panels-open {
   z-index: 199;
   background: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.25s ease;
 }
 
 .learn-panels--open .learn-panel__scrim {
@@ -1695,11 +1704,20 @@ body.learn-panels-open {
   border-left: 1px solid #d5dee3;
   overflow: hidden;
   transform: translateX(100%);
-  transition: transform 0.25s ease;
 }
 
 .learn-panels--open .learn-panel.is-active {
   transform: translateX(0);
+}
+
+.learn-panel__scrim,
+.connect-drawer__scrim {
+  transition: opacity 0.25s ease;
+}
+
+.learn-panel,
+.connect-drawer__panel {
+  transition: transform 0.25s ease;
 }
 
 .learn-panel__header {

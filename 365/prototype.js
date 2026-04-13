@@ -13,6 +13,7 @@
     thumbUp: "icons/thumb-up.svg",
     handMoney: "icons/hand-money.svg",
     tax: "icons/document.svg",
+    question: "icons/question.svg",
   };
 
   var CONNECT_DRAWER_TRIGGERS = {
@@ -35,29 +36,29 @@
       },
       {
         type: "expandable",
-        icon: "doc",
-        title: "Upload docs",
-        badge: "todo",
+        icon: "question",
+        title: "Answer questions for your expert",
+        badge: "optional",
         startOpen: false,
-        text: "Your expert requested docs in the chat. Here's your reminder to upload them.",
-        actionLabel: "Go to docs",
+        text: "Give your expert some info before you meet to save time during your call.",
+        actionLabel: "Go to questions",
       },
       {
         type: "expandable",
         icon: "bank",
-        title: "Connect bank",
+        title: "Automate your bank transactions",
         badge: "todo",
         startOpen: false,
-        text: "We'll take you to QuickBooks to connect your bank account and import your transactions.",
-        actionLabel: "Connect your account",
+        text: "Connect your bank account to automate your transactions.",
+        actionLabel: "Connect bank",
       },
       {
         type: "expandable",
         icon: "thumbUp",
-        title: "Expert reviews books",
+        title: "Your expert will review your books",
         badge: "upcoming",
         startOpen: false,
-        text: "If your expert needs more info, they'll reach out. You don't have to do anything right now.",
+        text: "You don't have to do anything. If your expert needs more info, they'll reach out.",
       },
       {
         type: "expandable",
@@ -141,18 +142,24 @@
     if (!trigger || !panel) return;
     trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
     if (expanded) {
-      panel.removeAttribute("hidden");
       root.classList.add("is-expanded");
       root.classList.remove("is-collapsed");
+      panel.style.maxHeight = panel.scrollHeight + "px";
     } else {
-      panel.setAttribute("hidden", "");
       root.classList.remove("is-expanded");
       root.classList.add("is-collapsed");
+      panel.style.maxHeight = "0";
     }
   }
 
   function toggle(root) {
-    setExpanded(root, !root.classList.contains("is-expanded"));
+    var willExpand = !root.classList.contains("is-expanded");
+    if (willExpand) {
+      document.querySelectorAll("#js-task-cards [data-expandable]").forEach(function (card) {
+        if (card !== root) setExpanded(card, false);
+      });
+    }
+    setExpanded(root, willExpand);
   }
 
   function badgeEl(kind) {
@@ -167,6 +174,9 @@
     } else if (kind === "progress") {
       span.className += " badge--progress";
       span.textContent = "In progress";
+    } else if (kind === "optional") {
+      span.className += " badge--optional";
+      span.textContent = "Optional";
     }
     return span;
   }
@@ -226,7 +236,6 @@
     panel.className = "expandable__panel";
     panel.setAttribute("role", "region");
     panel.setAttribute("aria-labelledby", "task-trigger-" + uid);
-    if (!card.startOpen) panel.setAttribute("hidden", "");
 
     var inner = document.createElement("div");
     inner.className = "expandable__panel-inner";
