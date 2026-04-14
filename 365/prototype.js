@@ -437,13 +437,18 @@
       guarantees.style.display = "none";
       started.style.display = "";
       included.style.display = "";
-      if (stateKey === "onboarding" || stateKey === "welcomeCall") {
-        // started → included → tax
+      if (stateKey === "onboarding") {
+        // Getting started: started → included → tax
+        row.appendChild(started);
+        row.appendChild(included);
+        row.appendChild(tax);
+      } else if (stateKey === "welcomeCall") {
+        // Welcome call: started → included → tax (tax in 3rd position)
         row.appendChild(started);
         row.appendChild(included);
         row.appendChild(tax);
       } else {
-        // taxFiling / subscriptionExpired: tax → started → included
+        // subscriptionExpired: tax → started → included
         row.appendChild(tax);
         row.appendChild(started);
         row.appendChild(included);
@@ -609,6 +614,12 @@
     document.querySelectorAll(".js-main-nav").forEach(function (link) {
       link.addEventListener("click", function (e) {
         e.preventDefault();
+        // Close questions flow if open
+        var qFlow = document.getElementById("questions-flow");
+        if (qFlow && !qFlow.hidden) {
+          qFlow.hidden = true;
+          qFlow.setAttribute("aria-hidden", "true");
+        }
         var v = link.getAttribute("data-main-view");
         if (v) showView(v);
       });
@@ -673,6 +684,44 @@
     });
   }
 
+  function initConnectBankModal() {
+    var modal = document.getElementById("connect-bank-modal");
+    if (!modal) return;
+    var closeBtn = document.getElementById("connect-bank-close");
+    var scrim = document.getElementById("connect-bank-scrim");
+
+    function openModal() {
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    // Open when "Connect your account" btn is clicked
+    document.body.addEventListener("click", function(e) {
+      var btn = e.target.closest(".btn, button");
+      if (btn && btn.textContent.trim() === "Connect your account") {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (scrim) scrim.addEventListener("click", closeModal);
+
+    // Clicking any bank button closes the modal
+    modal.querySelectorAll(".connect-bank-modal__bank-btn").forEach(function(btn) {
+      btn.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && !modal.hidden) closeModal();
+    });
+  }
+
   function initSwitcher() {
     var buttons = document.querySelectorAll(".state-switcher__btn");
     var host = document.getElementById("js-task-cards");
@@ -683,6 +732,12 @@
         var documentsView = document.getElementById("documents-view");
         if (documentsView && !documentsView.hidden && typeof window.showDashboard === "function") {
           window.showDashboard();
+        }
+        // Close questions flow if open
+        var qFlow = document.getElementById("questions-flow");
+        if (qFlow && !qFlow.hidden) {
+          qFlow.hidden = true;
+          qFlow.setAttribute("aria-hidden", "true");
         }
         var state = btn.getAttribute("data-state");
         if (!state) return;
@@ -738,12 +793,148 @@
     });
   }
 
+  function initQuestionsFlow() {
+    var flow = document.getElementById("questions-flow");
+    var backBtn = document.getElementById("questions-back");
+    var continueBtn = document.getElementById("questions-continue");
+    var skipBtn = document.getElementById("questions-skip");
+    var footer = document.getElementById("questions-footer");
+    if (!flow) return;
+
+    var currentStep = 1;
+    var totalSteps = 3;
+
+    function showStep(step) {
+      flow.querySelectorAll(".questions-step").forEach(function(el) {
+        el.hidden = true;
+      });
+      var isDone = step === "done";
+      if (isDone) {
+        flow.querySelector('[data-step="done"]').hidden = false;
+        if (skipBtn) skipBtn.hidden = true;
+      } else {
+        flow.querySelector('[data-step="' + step + '"]').hidden = false;
+        if (skipBtn) skipBtn.hidden = false;
+      }
+    }
+
+    function openFlow() {
+      currentStep = 1;
+      flow.hidden = false;
+      flow.setAttribute("aria-hidden", "false");
+      showStep(currentStep);
+      flow.scrollTop = 0;
+    }
+
+    function closeFlow() {
+      flow.hidden = true;
+      flow.setAttribute("aria-hidden", "true");
+    }
+
+    // Open on "Go to questions" button click
+    document.body.addEventListener("click", function(e) {
+      var btn = e.target.closest(".btn");
+      if (btn && btn.textContent.trim() === "Go to questions") {
+        openFlow();
+      }
+    });
+
+    // Q1 conditional sub-options
+    var q1OneRadio = document.getElementById("q1-one");
+    var q1Suboptions = document.getElementById("q1-suboptions");
+    var q1ProtipDefault = document.getElementById("q1-protip-default");
+    var q1ProtipSub = document.getElementById("q1-protip-sub");
+
+    function updateQ1Suboptions() {
+      var oneSelected = q1OneRadio && q1OneRadio.checked;
+      if (q1Suboptions) q1Suboptions.classList.toggle("is-visible", oneSelected);
+      if (q1ProtipDefault) q1ProtipDefault.hidden = oneSelected;
+      if (q1ProtipSub) q1ProtipSub.hidden = !oneSelected;
+    }
+
+    flow.addEventListener("change", function(e) {
+      if (e.target.name === "q1") updateQ1Suboptions();
+    });
+
+    function advanceStep() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+        flow.scrollTop = 0;
+      } else {
+        showStep("done");
+      }
+    }
+
+    continueBtn.addEventListener("click", function() {
+      if (flow.querySelector('[data-step="done"]') && !flow.querySelector('[data-step="done"]').hidden) {
+        closeFlow();
+      } else {
+        advanceStep();
+      }
+    });
+    if (skipBtn) skipBtn.addEventListener("click", advanceStep);
+
+    backBtn.addEventListener("click", function() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        flow.scrollTop = 0;
+      } else {
+        closeFlow(); // step 1 → back to dashboard
+      }
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && !flow.hidden) closeFlow();
+    });
+  }
+
+  function initBillingFlow() {
+    var flow = document.getElementById("billing-flow");
+    if (!flow) return;
+    var backBtn = document.getElementById("billing-flow-back");
+    var placeOrderBtn = document.getElementById("billing-place-order");
+
+    function openFlow() {
+      flow.hidden = false;
+      flow.setAttribute("aria-hidden", "false");
+      flow.scrollTop = 0;
+    }
+
+    function closeFlow() {
+      flow.hidden = true;
+      flow.setAttribute("aria-hidden", "true");
+    }
+
+    // Open on "Add a card" or "Update billing info" link clicks
+    document.body.addEventListener("click", function(e) {
+      var link = e.target.closest("a.link");
+      if (!link) return;
+      var text = link.textContent.trim();
+      if (text === "Add a card" || text === "Update billing info") {
+        e.preventDefault();
+        openFlow();
+      }
+    });
+
+    if (backBtn) backBtn.addEventListener("click", closeFlow);
+    if (placeOrderBtn) placeOrderBtn.addEventListener("click", closeFlow);
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && !flow.hidden) closeFlow();
+    });
+  }
+
   function initPage() {
     initSwitcher();
     initConnectDrawer();
     initMainView();
     initLearnPanels();
     initSubscriptionExpiredFaq();
+    initQuestionsFlow();
+    initBillingFlow();
+    initConnectBankModal();
   }
 
   if (document.readyState === "loading") {

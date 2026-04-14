@@ -284,7 +284,7 @@ a:hover {
   position: relative;
   padding: 0 20px;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
   color: var(--text-secondary);
@@ -336,9 +336,9 @@ a:hover {
   margin: 0 0 20px;
   max-width: 100%;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 34px;
+  font-size: 28px;
   font-weight: 400;
-  line-height: 44px;
+  line-height: 36px;
   letter-spacing: 0;
   color: var(--text-primary);
 }
@@ -1219,7 +1219,7 @@ a:hover {
   order: 3;
 }
 
-/* Onboarding only — started, included, tax */
+/* Onboarding — started, included, tax */
 #dashboard-view[data-workflow-state="onboarding"] .learn__row .mini-card--learn-started {
   order: 1;
 }
@@ -1229,6 +1229,19 @@ a:hover {
 }
 
 #dashboard-view[data-workflow-state="onboarding"] .learn__row .mini-card--learn-tax {
+  order: 3;
+}
+
+/* Welcome call — started, included, tax */
+#dashboard-view[data-workflow-state="welcomeCall"] .learn__row .mini-card--learn-started {
+  order: 1;
+}
+
+#dashboard-view[data-workflow-state="welcomeCall"] .learn__row .mini-card--learn-included {
+  order: 2;
+}
+
+#dashboard-view[data-workflow-state="welcomeCall"] .learn__row .mini-card--learn-tax {
   order: 3;
 }
 
@@ -1472,9 +1485,9 @@ a:hover {
   margin: 40px 0 16px;
   max-width: 100%;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 34px;
+  font-size: 28px;
   font-weight: 400;
-  line-height: 44px;
+  line-height: 36px;
   letter-spacing: 0;
   text-align: center;
   color: var(--text-primary);
@@ -1963,14 +1976,15 @@ body.learn-panels-open {
 /* ——— Questions flow ——— */
 .questions-flow {
   position: fixed;
-  inset: 0;
+  top: var(--header-height);
+  left: 200px;
+  right: 0;
+  bottom: 0;
   z-index: 300;
   background: var(--container-bg-primary);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  margin-left: 200px;
-  margin-top: var(--header-height);
 }
 
 .questions-flow[hidden] {
@@ -1980,171 +1994,189 @@ body.learn-panels-open {
 .questions-flow__inner {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
-  max-width: 640px;
+  max-width: 1060px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 40px 40px;
+  padding: 0 80px;
   box-sizing: border-box;
-}
-
-.questions-flow__header {
-  padding: 32px 0 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.questions-flow__close {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--link);
-  cursor: pointer;
-  width: fit-content;
-}
-
-.questions-flow__close:hover {
-  text-decoration: underline;
-}
-
-.questions-flow__progress-bar {
-  width: 100%;
-  height: 4px;
-  background: var(--container-bg-tertiary);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.questions-flow__progress-fill {
-  height: 100%;
-  background: var(--action-standard);
-  border-radius: 2px;
-  transition: width 0.3s ease;
 }
 
 .questions-flow__body {
-  flex: 1;
+  padding-top: 40px;
 }
 
+/* Counter: "1 of 4" */
+/* Counter — same style as .badge--upcoming */
 .questions-step__counter {
-  font-size: 13px;
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-secondary);
+  line-height: 16px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 0 0 12px;
-}
-
-.questions-step__title {
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 32px;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
-  margin: 0 0 8px;
+  background: var(--container-bg-primary);
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-small);
+  white-space: nowrap;
+  margin: 0 0 16px;
 }
 
-.questions-step__hint {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--text-secondary);
+/* Question title */
+.questions-step__title {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-primary);
   margin: 0 0 28px;
 }
 
+/* Options list */
 .questions-step__options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
+  margin-bottom: 28px;
 }
 
 .questions-option {
-  display: block;
-  cursor: pointer;
-}
-
-.questions-option input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.questions-option__box {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  border: 1px solid var(--container-border-primary);
-  border-radius: var(--radius-large);
-  background: var(--container-bg-primary);
-  transition: border-color 0.15s, background 0.15s;
+  gap: 14px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--text-primary);
 }
 
-.questions-option__box::before {
-  content: '';
+/* Native inputs */
+.questions-option input[type="radio"],
+.questions-option input[type="checkbox"] {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--container-border-primary);
-  border-radius: 50%;
-  background: #fff;
-  box-sizing: border-box;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-.questions-step__options--checkboxes .questions-option__box::before {
-  border-radius: 4px;
-}
-
-.questions-option input:checked ~ .questions-option__box {
-  border-color: var(--action-standard);
-  background: var(--container-bg-info);
-}
-
-.questions-option input:checked ~ .questions-option__box::before {
-  border-color: var(--action-standard);
-  background: var(--action-standard);
-  background-image: url("icons/complete.svg");
-  background-size: 14px 14px;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(10);
+  width: 22px;
+  height: 22px;
+  accent-color: var(--action-standard);
+  cursor: pointer;
+  margin: 0;
 }
 
 .questions-option__label {
   font-size: 16px;
-  font-weight: 500;
   line-height: 24px;
   color: var(--text-primary);
 }
 
-.questions-flow__footer {
-  display: flex;
-  gap: 12px;
-  padding-top: 32px;
-  justify-content: flex-end;
+/* Sub-options — indented under parent radio, hidden by default */
+.questions-suboptions {
+  display: none;
+  flex-direction: column;
+  padding-left: 32px;
+  margin-bottom: 4px;
 }
 
-.questions-flow__btn-back {
-  background: none;
-  border: 1px solid var(--container-border-primary);
-  border-radius: var(--radius-small);
-  padding: 10px 24px;
-  font-family: 'AvenirNext forINTUIT', sans-serif;
+.questions-suboptions.is-visible {
+  display: flex;
+}
+
+/* Pro tip box */
+.questions-pro-tip {
+  background: #f4f9ff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.questions-pro-tip p {
+  margin: 0;
   font-size: 16px;
+  line-height: 24px;
+  color: var(--text-primary);
+  font-weight: 400;
+  text-align: center;
+}
+
+.questions-pro-tip strong {
   font-weight: 600;
   color: var(--text-primary);
+}
+
+/* Footer — Back on left, Continue+Skip grouped on right */
+.questions-flow__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0 48px;
+  border-top: 1px solid var(--divider-primary);
+  margin-top: 48px;
+}
+
+/* Continue + Skip grouped together */
+.questions-flow__footer-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Skip button — 2px outline */
+.questions-flow__btn-skip[hidden] { display: none; }
+.questions-flow__btn-skip {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+  padding: 9px 22px;
+  background: #ffffff;
+  border: 2px solid var(--action-standard);
+  border-radius: var(--radius-small);
+  color: var(--action-standard);
+  font-family: 'AvenirNext forINTUIT', sans-serif;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.questions-flow__btn-skip:hover {
+  background: #ffffff;
+}
+
+/* Continue button — auto width */
+.questions-flow__btn-continue {
+  display: inline-block;
+  width: auto;
+  font-size: 18px;
+  line-height: 26px;
+  padding: 9px 22px;
+}
+
+/* Tint chevron-left to match link blue in Back buttons */
+.questions-flow__btn-back img,
+.billing-flow__back img {
+  filter: invert(27%) sepia(60%) saturate(600%) hue-rotate(190deg) brightness(85%) contrast(95%);
+}
+
+/* Back = always-visible text link with chevron, left side */
+.questions-flow__btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 9px 10px;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--link);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .questions-flow__btn-back:hover {
-  background: var(--container-bg-secondary);
+  text-decoration: underline;
 }
 
 /* Done screen */
@@ -2153,7 +2185,11 @@ body.learn-panels-open {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: 40px;
+  padding-top: 60px;
+}
+
+.questions-step--done[hidden] {
+  display: none;
 }
 
 .questions-done__icon {
@@ -2169,7 +2205,7 @@ body.learn-panels-open {
 
 .questions-done__title {
   font-size: 28px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 36px;
   color: var(--text-primary);
   margin: 0 0 12px;
@@ -2179,10 +2215,503 @@ body.learn-panels-open {
   font-size: 16px;
   line-height: 24px;
   color: var(--text-secondary);
-  margin: 0 0 32px;
-  max-width: 400px;
+  margin: 0;
+  max-width: 420px;
 }
 
-.questions-done__cta {
-  min-width: 200px;
+/* ── Connect an account modal ── */
+.connect-bank-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.connect-bank-modal[hidden] { display: none; }
+
+.connect-bank-modal__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.connect-bank-modal__dialog {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.connect-bank-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--divider-primary);
+  background: var(--container-bg-secondary);
+  border-radius: 12px 12px 0 0;
+}
+
+.connect-bank-modal__title-bar {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.connect-bank-modal__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.connect-bank-modal__body {
+  padding: 32px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.connect-bank-modal__heading {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.connect-bank-modal__sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.connect-bank-modal__search-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.connect-bank-modal__search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.45;
+}
+
+.connect-bank-modal__search {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px 0 36px;
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-small);
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 16px;
+  color: var(--text-primary);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.connect-bank-modal__search:focus {
+  border-color: var(--action-standard);
+  box-shadow: 0 0 0 2px rgba(32,94,163,0.15);
+}
+
+.connect-bank-modal__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.connect-bank-modal__bank-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--container-border-primary);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.connect-bank-modal__bank-btn:hover {
+  border-color: var(--action-standard);
+  box-shadow: 0 0 0 1px var(--action-standard);
+}
+
+.connect-bank-modal__bank-logo {
+  border-radius: 4px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Show more — secondary outline, same as Skip button */
+.connect-bank-modal__show-more,
+.btn--secondary-outline {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 8px 22px;
+  background: #ffffff;
+  border: 2px solid var(--action-standard);
+  border-radius: var(--radius-small);
+  color: var(--action-standard);
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.connect-bank-modal__show-more:hover,
+.btn--secondary-outline:hover {
+  background: #ffffff;
+}
+
+.connect-bank-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--divider-primary);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Billing / Add a card overlay ── */
+.billing-flow {
+  position: fixed;
+  top: var(--header-height);
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  z-index: 300;
+  background: var(--container-bg-primary);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.billing-flow[hidden] { display: none; }
+
+.billing-flow__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  max-width: 1060px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 80px 60px;
+  box-sizing: border-box;
+}
+
+.billing-flow__header {
+  padding: 24px 0 16px;
+}
+
+.billing-flow__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--link);
+  cursor: pointer;
+}
+
+.billing-flow__back:hover { text-decoration: underline; }
+
+.billing-flow__body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Left — payment form card */
+.billing-card {
+  border: 1px solid var(--container-border-primary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.billing-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--container-border-primary);
+}
+
+.billing-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.billing-card__collapse {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.billing-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.billing-card__section-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.billing-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.billing-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.billing-input {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-small);
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.billing-input:focus {
+  border-color: var(--action-standard);
+  box-shadow: 0 0 0 2px rgba(32,94,163,0.15);
+}
+
+.billing-input--short { max-width: 100px; }
+
+.billing-input-wrap {
+  position: relative;
+}
+
+.billing-input-wrap--icons .billing-input {
+  padding-right: 96px;
+}
+
+.billing-card-icons {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.billing-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.billing-row--tight { gap: 8px; }
+
+.billing-select {
+  height: 40px;
+  padding: 0 8px;
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-small);
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: #fff;
+  cursor: pointer;
+}
+
+.billing-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.billing-checkbox-label--top { align-items: flex-start; }
+
+.billing-checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--action-standard);
+  cursor: pointer;
+}
+
+.billing-address {
+  padding-left: 26px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary);
+}
+
+.billing-address p { margin: 0; }
+.billing-address__name { font-weight: 600; }
+
+/* Right — shopping cart summary */
+.billing-summary {
+  border: 1px solid var(--container-border-primary);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.billing-summary__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+.billing-summary__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-primary);
+  padding: 8px 0;
+}
+
+.billing-summary__row--product {
+  font-size: 14px;
+}
+
+.billing-summary__price {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.billing-summary__switch {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.billing-summary__divider {
+  height: 1px;
+  background: var(--divider-primary);
+  margin: 8px 0;
+}
+
+.billing-summary__included-badge {
+  display: inline-block;
+  background: #e8f5ef;
+  color: #1a7a4a;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.billing-summary__price--strike {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-right: 4px;
+}
+
+.billing-summary__price--free { font-weight: 600; }
+
+.billing-summary__row--subtotal {
+  align-items: flex-start;
+  padding-top: 12px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.billing-summary__subtotal-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.billing-summary__price--large {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.billing-summary__price--tax {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Footer — legal text + place order */
+.billing-flow__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--divider-primary);
+  margin-top: 32px;
+}
+
+.billing-flow__legal {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 640px;
+}
+
+.billing-flow__place-order {
+  display: inline-block;
+  width: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
