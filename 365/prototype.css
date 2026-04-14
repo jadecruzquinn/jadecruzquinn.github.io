@@ -2732,11 +2732,28 @@ body.learn-panels-open {
   font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
-  position: relative;
-  z-index: 10;
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  right: 0;
+  z-index: 99;
 }
 .notifications-bar:not([hidden]) {
   display: flex;
+}
+/* Push main content down to account for notifications bar (~37px) */
+.notifications-bar:not([hidden]) ~ .main {
+  margin-top: calc(60px + 37px);
+}
+@media (max-width: 700px) {
+  .notifications-bar {
+    left: 0;
+    top: auto; /* sits below mobile-top-bar, which is not fixed */
+    position: relative;
+  }
+  .notifications-bar:not([hidden]) ~ .main {
+    margin-top: 60px; /* reset — mobile header handles its own offset */
+  }
 }
 .notifications-bar__icon {
   opacity: 0.6;
