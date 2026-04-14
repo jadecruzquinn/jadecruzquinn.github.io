@@ -26,6 +26,13 @@
       <div class="mobile-top-bar">
         <img class="mobile-top-bar__logo" src="logo.svg" alt="Expert 365 Business" />
       </div>
+      <!-- Notifications sticky bar — welcome call only -->
+      <div id="notifications-bar" class="notifications-bar" hidden>
+        <img src="icons/notification.svg" width="18" height="18" alt="" class="notifications-bar__icon" />
+        <span class="notifications-bar__label">Notifications</span>
+        <span class="notifications-bar__dot" aria-hidden="true"></span>
+      </div>
+
       <header class="header">
         <div class="header__actions">
           <div class="state-switcher-wrap">
@@ -33,6 +40,7 @@
               <button type="button" class="state-switcher__btn is-active" data-state="onboarding" role="tab" aria-selected="true">Getting started</button>
               <button type="button" class="state-switcher__btn" data-state="welcomeCall" role="tab" aria-selected="false">Welcome call</button>
               <button type="button" class="state-switcher__btn" data-state="quarterlyReview" role="tab" aria-selected="false">Quarterly review</button>
+              <button type="button" class="state-switcher__btn" data-state="taxFiling" role="tab" aria-selected="false">Tax filing</button>
               <button type="button" class="state-switcher__btn" data-state="subscriptionExpired" role="tab" aria-selected="false">Subscription expired</button>
             </div>
             <div class="state-switcher-fade" aria-hidden="true">
@@ -940,6 +948,145 @@
     </div>
   </div>
 
+  <!-- Meeting started toast — welcome call only, triggered after 3s delay -->
+  <div id="meeting-toast" class="meeting-toast" hidden>
+    <button class="meeting-toast__close" id="meeting-toast-close" aria-label="Close">
+      <img src="icons/close.svg" width="16" height="16" alt="" />
+    </button>
+    <div class="meeting-toast__icon-wrap">
+      <img src="icons/video-screen.svg" width="56" height="56" alt="" />
+    </div>
+    <h2 class="meeting-toast__title">Your meeting has started</h2>
+    <p class="meeting-toast__body">You'll see and hear them, but they can only hear you.</p>
+    <button type="button" class="btn btn--primary meeting-toast__join" id="meeting-toast-join">Join</button>
+    <p class="meeting-toast__disclaimer">We'll never ask for payment or sensitive personal data. Meeting may be recorded for quality purposes.</p>
+  </div>
+
+  <!-- Video call widget — shown when Join is clicked -->
+  <div id="video-call-overlay" class="video-call-overlay" hidden>
+
+    <!-- XS / compact mode: horizontal strip -->
+    <div class="video-call-overlay__xs">
+      <div class="video-call-overlay__xs-thumb">
+        <img src="expert-photo.png" alt="Claire" class="video-call-overlay__xs-feed" />
+        <span class="video-call-overlay__xs-name">Claire</span>
+      </div>
+      <div class="video-call-overlay__xs-controls">
+        <button class="video-call-overlay__ctrl video-call-overlay__ctrl--muted" aria-label="Unmute">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><path d="M12 3a3 3 0 0 1 3 3v3M9 9v2a3 3 0 0 0 5.83 1"/><path d="M17 16.95A7 7 0 0 1 5 11v-1M12 19v3M8 22h8"/></svg>
+        </button>
+        <button class="video-call-overlay__ctrl" aria-label="Camera">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="14" height="11" rx="2"/><path d="M16 11l5-3v8l-5-3"/></svg>
+        </button>
+        <button class="video-call-overlay__ctrl video-call-overlay__ctrl--end" aria-label="End call">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.68-.35 1.02-.22 1.1.4 2.3.6 3.58.6.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C9.61 21 3 14.39 3 6c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.28.2 2.48.58 3.58.13.34.05.75-.22 1.02L6.6 10.8z"/></svg>
+        </button>
+      </div>
+      <button class="video-call-overlay__xs-expand" id="video-xs-expand" aria-label="Expand">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="white" stroke-width="1.8"><path d="M3 7V3h4M17 7V3h-4M3 13v4h4M17 13v4h-4"/></svg>
+      </button>
+    </div>
+
+    <!-- Full / expanded mode -->
+    <div class="video-call-overlay__full">
+      <!-- Top bar -->
+      <div class="video-call-overlay__topbar">
+        <div class="video-call-overlay__topbar-left">
+          <button class="video-call-overlay__topbtn" id="video-minimize" aria-label="Minimize">
+            <svg viewBox="0 0 20 20" width="14" height="14" fill="white"><rect x="3" y="9" width="14" height="2" rx="1"/></svg>
+          </button>
+          <button class="video-call-overlay__topbtn" aria-label="Maximize">
+            <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="white" stroke-width="1.8"><rect x="4" y="4" width="12" height="12" rx="1"/></svg>
+          </button>
+        </div>
+        <div class="video-call-overlay__topbar-right">
+          <span class="video-call-overlay__participants">
+            <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="white" stroke-width="1.5"><circle cx="7" cy="7" r="3"/><path d="M1 17c0-3.31 2.69-6 6-6"/><circle cx="14" cy="7" r="3"/><path d="M10 17c0-3.31 2.69-6 6-6"/></svg>
+            2
+          </span>
+          <button class="video-call-overlay__topbtn" aria-label="Settings">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="white" stroke-width="1.5"><circle cx="10" cy="10" r="2.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Video tiles -->
+      <div class="video-call-overlay__tiles">
+        <div class="video-call-overlay__tile video-call-overlay__tile--main">
+          <img src="expert-photo.png" alt="Claire" class="video-call-overlay__video-feed" />
+          <span class="video-call-overlay__name-badge">
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="white" stroke-width="1.5"><path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s0-3 5-3 5 3 5 3"/></svg>
+            Claire
+          </span>
+        </div>
+        <div class="video-call-overlay__tile video-call-overlay__tile--self">
+          <span class="video-call-overlay__self-initial">J</span>
+        </div>
+      </div>
+      <!-- Controls -->
+      <div class="video-call-overlay__controls">
+        <button class="video-call-overlay__ctrl video-call-overlay__ctrl--muted" aria-label="Unmute">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="2"><line x1="4" y1="4" x2="20" y2="20"/><path d="M12 3a3 3 0 0 1 3 3v3M9 9v2a3 3 0 0 0 5.83 1"/><path d="M17 16.95A7 7 0 0 1 5 11v-1M12 19v3M8 22h8"/></svg>
+        </button>
+        <button class="video-call-overlay__ctrl" aria-label="Camera">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="14" height="11" rx="2"/><path d="M16 11l5-3v8l-5-3"/></svg>
+        </button>
+        <button class="video-call-overlay__ctrl" aria-label="Screenshare">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg>
+        </button>
+        <button class="video-call-overlay__ctrl video-call-overlay__ctrl--end" id="video-call-end" aria-label="End call">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.68-.35 1.02-.22 1.1.4 2.3.6 3.58.6.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C9.61 21 3 14.39 3 6c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.28.2 2.48.58 3.58.13.34.05.75-.22 1.02L6.6 10.8z"/></svg>
+        </button>
+      </div>
+      <!-- Resize handle -->
+      <div class="video-call-overlay__resize-handle" id="video-resize-handle" title="Drag to resize">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="7" cy="12" r="1.5" fill="rgba(255,255,255,0.5)"/><circle cx="12" cy="12" r="1.5" fill="rgba(255,255,255,0.5)"/><circle cx="17" cy="12" r="1.5" fill="rgba(255,255,255,0.5)"/></svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Chat drawer — desktop right panel -->
+  <div id="chat-drawer" class="chat-drawer" hidden aria-hidden="true">
+    <div class="chat-drawer__panel">
+      <div class="chat-drawer__header">
+        <button type="button" class="chat-drawer__close" id="chat-drawer-close" aria-label="Close chat">
+          <img src="icons/close.svg" width="20" height="20" alt="" />
+        </button>
+      </div>
+      <div class="chat-drawer__body">
+        <div class="chat-drawer__intro">
+          <p class="chat-drawer__time">Today, 8:20 AM</p>
+          <p class="chat-drawer__connected">You are now connected to:</p>
+          <div class="chat-drawer__avatar-wrap">
+            <img src="expert-photo.png" alt="Your expert" class="chat-drawer__avatar" />
+          </div>
+          <p class="chat-drawer__expert-name">Jan</p>
+          <p class="chat-drawer__expert-cred">Tax expert, 8 years</p>
+        </div>
+        <div class="chat-drawer__messages">
+          <div class="chat-drawer__msg-group">
+            <p class="chat-drawer__msg-author">Jan</p>
+            <div class="chat-drawer__msg-row">
+              <img src="expert-photo.png" alt="" class="chat-drawer__msg-avatar" />
+              <div class="chat-drawer__bubble">
+                Hi there <strong>Junxy</strong>, nice to meet you! I'm <strong>Jan</strong> — a trained <strong>tax professional</strong>, and I'm looking forward to being your Expert 365 Business expert.<br><br>What can I help you with today?
+              </div>
+            </div>
+            <p class="chat-drawer__timestamp">8:20 AM</p>
+          </div>
+        </div>
+      </div>
+      <div class="chat-drawer__footer">
+        <div class="chat-drawer__input-wrap">
+          <input type="text" class="chat-drawer__input" placeholder="Type or ask something" aria-label="Message" />
+          <button class="chat-drawer__send" aria-label="Send">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#205ea3" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Billing / Add a card overlay -->
   <div id="billing-flow" class="billing-flow" aria-hidden="true" hidden>
     <div class="billing-flow__inner">
@@ -1003,7 +1150,7 @@
                 </div>
                 <div class="billing-field">
                   <label class="billing-label" for="cc-zip">ZIP code</label>
-                  <input type="text" id="cc-zip" class="billing-input" value="92104" />
+                  <input type="text" id="cc-zip" class="billing-input" value="90042" />
                 </div>
               </div>
               <label class="billing-checkbox-label">
@@ -1012,9 +1159,9 @@
               </label>
               <div class="billing-address">
                 <p class="billing-address__name">Company Address</p>
-                <p>The Banana Stand</p>
+                <p>Junxy Coffee</p>
                 <p>1234 Any Street</p>
-                <p>San Diego, CA, 92104</p>
+                <p>Los Angeles, CA, 90042</p>
               </div>
               <label class="billing-checkbox-label billing-checkbox-label--top">
                 <input type="checkbox" class="billing-checkbox" checked />

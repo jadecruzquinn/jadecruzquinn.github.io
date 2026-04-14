@@ -77,14 +77,11 @@
     ],
     welcomeCall: [
       {
-        type: "expandable",
-        icon: "calAlert",
-        title: "Schedule your Q3 check-in",
-        badge: "todo",
-        section: "To do",
-        startOpen: false,
-        text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
-        actionLabel: "Schedule a call",
+        type: "completedOpen",
+        title: "You answered questions for your expert",
+        section: "In progress",
+        text: "We received your response! Next, you\u2019ll have a welcome call with your expert.",
+        actionLabel: "Edit responses",
       },
       {
         type: "expandable",
@@ -94,7 +91,7 @@
         section: null,
         startOpen: false,
         bgSecondary: true,
-        text: "Looks like you've already connected your bank. You can update your info anytime.",
+        text: "Looks like you\u2019ve already connected your bank. You can update your info anytime.",
         actionLabel: "Update account info",
       },
       {
@@ -168,23 +165,35 @@
       },
     ],
     taxFiling: [
-      { type: "completed", title: "Your expert reviewed your books" },
-      { type: "completed", title: "You completed your Q3 check-in" },
       {
         type: "expandable",
-        icon: "handMoney",
-        title: "Your expert is working on your taxes",
-        badge: "progress",
-        section: "To do",
+        icon: "thumbUp",
+        title: "Your expert reviewed your books",
+        badge: null,
+        section: "In progress",
         startOpen: false,
-        text: "Rest assured, your taxes are being handled. If you have questions in the meantime, ask them here.",
-        actionLabel: "Go to taxes",
+        bgSecondary: true,
+        text: "Your expert has reviewed your books and is ready to move forward.",
       },
       {
-        type: "completedOpen",
-        title: "Your 2025 taxes are complete!",
-        text: "Your expert finished filing your taxes! Check your status anytime.",
-        actionLabel: "Check status",
+        type: "expandable",
+        icon: "doc",
+        title: "Upload docs",
+        badge: "todo",
+        section: "To do",
+        startOpen: false,
+        text: "Your expert requested docs in the chat. Here\u2019s your reminder to upload them.",
+        actionLabel: "Go to docs",
+      },
+      {
+        type: "expandable",
+        icon: "tax",
+        title: "Start filing anytime",
+        badge: "todo",
+        section: null,
+        startOpen: false,
+        text: "Your expert is ready when you are. Filing is included, at no extra cost.",
+        actionLabel: "Start taxes",
       },
     ],
     subscriptionExpired: [],
@@ -371,19 +380,29 @@
     var t = document.createElement("span");
     t.className = "task-card__title";
     t.textContent = card.title;
+    var chevron = document.createElement("img");
+    chevron.src = "icons/chevron-down.svg";
+    chevron.width = 20;
+    chevron.height = 20;
+    chevron.setAttribute("aria-hidden", "true");
+    chevron.style.marginLeft = "auto";
+    chevron.style.flexShrink = "0";
     row.appendChild(check);
     row.appendChild(t);
+    row.appendChild(chevron);
     var body = document.createElement("div");
     body.className = "task-card__body";
     var p = document.createElement("p");
     p.className = "task-card__body-text";
     p.textContent = card.text;
-    var action = document.createElement("button");
-    action.type = "button";
-    action.className = "btn btn--outline";
-    action.textContent = card.actionLabel;
     body.appendChild(p);
-    body.appendChild(action);
+    if (card.actionLabel) {
+      var action = document.createElement("button");
+      action.type = "button";
+      action.className = "btn btn--outline";
+      action.textContent = card.actionLabel;
+      body.appendChild(action);
+    }
     root.appendChild(row);
     root.appendChild(body);
     return root;
@@ -442,8 +461,8 @@
         row.appendChild(started);
         row.appendChild(included);
         row.appendChild(tax);
-      } else if (stateKey === "welcomeCall") {
-        // Welcome call: started → included → tax (tax in 3rd position)
+      } else if (stateKey === "welcomeCall" || stateKey === "taxFiling") {
+        // Welcome call / Tax filing: started → included → tax
         row.appendChild(started);
         row.appendChild(included);
         row.appendChild(tax);
@@ -712,8 +731,8 @@
     if (closeBtn) closeBtn.addEventListener("click", closeModal);
     if (scrim) scrim.addEventListener("click", closeModal);
 
-    // Clicking any bank button closes the modal
-    modal.querySelectorAll(".connect-bank-modal__bank-btn").forEach(function(btn) {
+    // Clicking any bank button or Show more closes the modal
+    modal.querySelectorAll(".connect-bank-modal__bank-btn, .connect-bank-modal__show-more").forEach(function(btn) {
       btn.addEventListener("click", closeModal);
     });
 
@@ -926,6 +945,211 @@
     });
   }
 
+  function initNotificationsAndMeeting() {
+    var bar = document.getElementById("notifications-bar");
+    var toast = document.getElementById("meeting-toast");
+    var toastClose = document.getElementById("meeting-toast-close");
+    var toastJoin = document.getElementById("meeting-toast-join");
+    var videoOverlay = document.getElementById("video-call-overlay");
+    var videoEnd = document.getElementById("video-call-end");
+    var videoMinimize = document.getElementById("video-minimize");
+    var videoXsExpand = document.getElementById("video-xs-expand");
+    var resizeHandle = document.getElementById("video-resize-handle");
+    var toastTimer = null;
+
+    // Default tile height (px)
+    var tileHeight = 180;
+
+    function showToast() {
+      if (toast) toast.hidden = false;
+    }
+
+    function hideToast() {
+      if (toast) toast.hidden = true;
+    }
+
+    function showVideoCall() {
+      hideToast();
+      if (videoOverlay) {
+        videoOverlay.hidden = false;
+        videoOverlay.classList.remove("is-minimized");
+        videoOverlay.style.setProperty("--video-tile-height", tileHeight + "px");
+        // Reset position to top-right
+        videoOverlay.style.left = "";
+        videoOverlay.style.top = "";
+      }
+    }
+
+    function hideVideoCall() {
+      if (videoOverlay) videoOverlay.hidden = true;
+      setWorkflowState("quarterlyReview");
+      var buttons = document.querySelectorAll(".state-switcher__btn");
+      buttons.forEach(function(b) {
+        b.classList.toggle("is-active", b.getAttribute("data-state") === "quarterlyReview");
+        b.setAttribute("aria-selected", b.getAttribute("data-state") === "quarterlyReview" ? "true" : "false");
+      });
+    }
+
+    // Minimize / expand
+    if (videoMinimize) {
+      videoMinimize.addEventListener("click", function(e) {
+        e.stopPropagation();
+        if (videoOverlay) videoOverlay.classList.add("is-minimized");
+      });
+    }
+    if (videoXsExpand) {
+      videoXsExpand.addEventListener("click", function(e) {
+        e.stopPropagation();
+        if (videoOverlay) videoOverlay.classList.remove("is-minimized");
+      });
+    }
+
+    // ── Drag to move widget ──
+    if (videoOverlay) {
+      var dragStartX, dragStartY, widgetStartLeft, widgetStartTop;
+      var isDragging = false;
+
+      function getWidgetRect() {
+        var r = videoOverlay.getBoundingClientRect();
+        return { left: r.left, top: r.top };
+      }
+
+      videoOverlay.addEventListener("mousedown", function(e) {
+        // Only drag via topbar or xs strip (not controls/tiles)
+        var isHandle = e.target.closest(".video-call-overlay__topbar") ||
+                       e.target.closest(".video-call-overlay__xs-thumb") ||
+                       e.target.closest(".video-call-overlay__xs-name");
+        if (!isHandle) return;
+        e.preventDefault();
+        isDragging = true;
+        var rect = getWidgetRect();
+        widgetStartLeft = rect.left;
+        widgetStartTop = rect.top;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+
+        // Switch from right-anchored to left-anchored positioning
+        videoOverlay.style.right = "";
+        videoOverlay.style.left = widgetStartLeft + "px";
+        videoOverlay.style.top = widgetStartTop + "px";
+      });
+
+      document.addEventListener("mousemove", function(e) {
+        if (!isDragging) return;
+        var dx = e.clientX - dragStartX;
+        var dy = e.clientY - dragStartY;
+        videoOverlay.style.left = (widgetStartLeft + dx) + "px";
+        videoOverlay.style.top = (widgetStartTop + dy) + "px";
+      });
+
+      document.addEventListener("mouseup", function() {
+        isDragging = false;
+      });
+    }
+
+    // ── Resize handle: drag to change video tile height ──
+    if (resizeHandle && videoOverlay) {
+      var isResizing = false;
+      var resizeStartY, resizeStartHeight;
+
+      resizeHandle.addEventListener("mousedown", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isResizing = true;
+        resizeStartY = e.clientY;
+        resizeStartHeight = tileHeight;
+      });
+
+      document.addEventListener("mousemove", function(e) {
+        if (!isResizing) return;
+        var dy = e.clientY - resizeStartY;
+        tileHeight = Math.max(120, Math.min(400, resizeStartHeight + dy));
+        videoOverlay.style.setProperty("--video-tile-height", tileHeight + "px");
+      });
+
+      document.addEventListener("mouseup", function() {
+        isResizing = false;
+      });
+    }
+
+    // Show/hide bar + trigger toast based on workflow state
+    function onStateChange(stateKey) {
+      clearTimeout(toastTimer);
+      hideToast();
+      if (videoOverlay) videoOverlay.hidden = true;
+
+      if (stateKey === "welcomeCall") {
+        if (bar) bar.hidden = false;
+        toastTimer = setTimeout(showToast, 2500);
+      } else {
+        if (bar) bar.hidden = true;
+      }
+    }
+
+    document.querySelectorAll(".state-switcher__btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        onStateChange(btn.getAttribute("data-state"));
+      });
+    });
+
+    if (bar) {
+      bar.addEventListener("click", function() {
+        clearTimeout(toastTimer);
+        showToast();
+      });
+    }
+
+    if (toastClose) toastClose.addEventListener("click", hideToast);
+    if (toastJoin) toastJoin.addEventListener("click", function(e) {
+      e.stopPropagation();
+      showVideoCall();
+    });
+    if (videoEnd) videoEnd.addEventListener("click", function(e) {
+      e.stopPropagation();
+      hideVideoCall();
+    });
+
+    // Click anywhere outside video overlay to dismiss + transition
+    document.addEventListener("click", function(e) {
+      if (videoOverlay && !videoOverlay.hidden) {
+        if (!videoOverlay.contains(e.target)) {
+          hideVideoCall();
+        }
+      }
+    });
+  }
+
+  function initChatDrawer() {
+    var drawer = document.getElementById("chat-drawer");
+    var closeBtn = document.getElementById("chat-drawer-close");
+    if (!drawer) return;
+
+    function openDrawer() {
+      drawer.hidden = false;
+      drawer.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDrawer() {
+      drawer.hidden = true;
+      drawer.setAttribute("aria-hidden", "true");
+    }
+
+    // Open on "Chat with your expert" button
+    document.body.addEventListener("click", function(e) {
+      var btn = e.target.closest("button");
+      if (btn && btn.classList.contains("btn--expert-chat")) {
+        e.preventDefault();
+        openDrawer();
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && !drawer.hidden) closeDrawer();
+    });
+  }
+
   function initPage() {
     initSwitcher();
     initConnectDrawer();
@@ -935,6 +1159,8 @@
     initQuestionsFlow();
     initBillingFlow();
     initConnectBankModal();
+    initNotificationsAndMeeting();
+    initChatDrawer();
   }
 
   if (document.readyState === "loading") {
