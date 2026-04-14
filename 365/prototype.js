@@ -8,6 +8,7 @@
     video: "icons/video-call.svg",
     doc: "icons/document.svg",
     bank: "icons/connect-bank.svg",
+    bankComplete: "icons/complete.svg",
     calendar: "icons/calendar.svg",
     calAlert: "icons/cal-alert.svg",
     thumbUp: "icons/thumb-up.svg",
@@ -34,6 +35,16 @@
         startOpen: false,
         text: "Your expert will finish setting up your account during your welcome call.",
         actionLabel: "Schedule a call",
+      },
+      {
+        type: "expandable",
+        icon: "bank",
+        title: "Automate your bank transactions",
+        badge: "todo",
+        section: null,
+        startOpen: false,
+        text: "We'll take you to QuickBooks to connect your bank account and import your transactions.",
+        actionLabel: "Connect your account",
       },
       {
         type: "expandable",
@@ -67,23 +78,23 @@
     welcomeCall: [
       {
         type: "expandable",
-        icon: "thumbUp",
-        title: "Your expert is reviewing your books",
-        badge: "progress",
-        section: "To do",
-        startOpen: false,
-        text: "Sit tight — your expert is on it! You can reach out if you have questions.",
-        actionLabel: "Start a chat",
-      },
-      {
-        type: "expandable",
         icon: "calAlert",
         title: "Schedule your Q3 check-in",
         badge: "todo",
-        section: null,
+        section: "To do",
         startOpen: false,
         text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
         actionLabel: "Schedule a call",
+      },
+      {
+        type: "expandable",
+        icon: "bankComplete",
+        title: "You connected your bank account",
+        badge: null,
+        section: null,
+        startOpen: false,
+        text: "Looks like you've already connected your bank. You can update your info anytime.",
+        actionLabel: "Update account info",
       },
       {
         type: "expandable",
@@ -92,8 +103,17 @@
         badge: "upcoming",
         section: "Up next",
         startOpen: false,
-        text: "Your appointment is at 11:00am on October 1, 2025.",
+        text: (function() { var d = new Date(); var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return "Your appointment is at 11:00am on " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + "."; })(),
         actionLabel: "Reschedule",
+      },
+      {
+        type: "expandable",
+        icon: "thumbUp",
+        title: "Your expert will review your books",
+        badge: "upcoming",
+        section: null,
+        startOpen: false,
+        text: "If your expert needs more info, they'll reach out. You don't have to do anything right now.",
       },
       {
         type: "expandable",
@@ -106,8 +126,6 @@
       },
     ],
     quarterlyReview: [
-      { type: "completed", title: "You completed your welcome call" },
-      { type: "completed", title: "Your expert reviewed your books" },
       {
         type: "expandable",
         icon: "calAlert",
@@ -117,6 +135,17 @@
         startOpen: false,
         text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
         actionLabel: "Schedule a call",
+      },
+      { type: "completed", title: "You completed your welcome call" },
+      {
+        type: "expandable",
+        icon: "thumbUp",
+        title: "Your expert is reviewing your books",
+        badge: "progress",
+        section: "In progress",
+        startOpen: false,
+        text: "Sit tight \u2013 your expert is on it! You can reach out if you have questions.",
+        actionLabel: "Start a chat",
       },
       {
         type: "expandable",
@@ -255,7 +284,7 @@
     label.textContent = card.title;
     btn.appendChild(label);
 
-    btn.appendChild(badgeEl(card.badge));
+    if (card.badge) { btn.appendChild(badgeEl(card.badge)); }
 
     var chev = document.createElement("span");
     chev.className = "expandable__chevron";
