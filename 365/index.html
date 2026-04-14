@@ -208,6 +208,26 @@
                 <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="included" style="display:inline-flex; align-items:center; gap:4px;">See all benefits <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
               </div>
             </article>
+            <article class="mini-card mini-card--learn-quarterly-checkin" style="display:none;">
+              <div class="mini-card__icon-wrap">
+                <img class="mini-card__icon" src="icons/calendar.svg" alt="" width="32" height="32" />
+              </div>
+              <div class="mini-card__body">
+                <h3 class="mini-card__title">What happens at a quarterly check in?</h3>
+                <p class="mini-card__text">In addition to quarterly estimates, your expert will update you on the health of your books.</p>
+                <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="quarterly-checkin" style="display:inline-flex; align-items:center; gap:4px;">See what's covered <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
+              </div>
+            </article>
+            <article class="mini-card mini-card--learn-guarantees" style="display:none;">
+              <div class="mini-card__icon-wrap">
+                <img class="mini-card__icon" src="icons/hand-money.svg" alt="" width="32" height="32" />
+              </div>
+              <div class="mini-card__body">
+                <h3 class="mini-card__title">You're covered with TurboTax guarantees</h3>
+                <p class="mini-card__text">Every TurboTax product will get you the best tax outcome, guaranteed.</p>
+                <a href="#" class="link link--inline js-learn-panel-open" data-learn-panel="guarantees" style="display:inline-flex; align-items:center; gap:4px;">Our guarantees <img src="icons/chevron-right.svg" width="16" height="16" alt="" style="filter: invert(27%) sepia(60%) saturate(500%) hue-rotate(185deg) brightness(85%) contrast(95%); vertical-align:middle;" /></a>
+              </div>
+            </article>
           </div>
         </section>
         </div>
@@ -253,7 +273,7 @@
               <h2 class="section-heading">Continue filing your taxes</h2>
               <article class="subscription-expired-promo-card subscription-expired-cards">
                 <div style="display:flex; align-items:center; height:28px;">
-                  <img class="subscription-expired-promo-card__logo" src="turbotax.svg" alt="" style="height:28px !important; width:auto !important; display:block !important;" />
+                  <img class="subscription-expired-promo-card__logo" src="turbotax.svg" alt="" style="height:22px !important; width:auto !important; display:block !important;" />
                 </div>
                 <p class="subscription-expired-promo-card__title">Get your taxes done with Expert Full Service Business</p>
                 <p class="subscription-expired-promo-card__body">An expert preps, signs, and files your taxes—with audit protection included at no extra cost.</p>
@@ -623,6 +643,86 @@
         <p class="learn-panel__text">
           See what your expert sees. You can also pull detailed reports yourself to monitor your business or prepare any questions for your expert.
         </p>
+      </div>
+    </aside>
+
+    <aside
+      class="learn-panel"
+      id="learn-panel-quarterly-checkin"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="learn-panel-quarterly-checkin-title"
+      aria-hidden="true"
+    >
+      <div class="learn-panel__header">
+        <div class="learn-panel__header-top">
+          <button type="button" class="learn-panel__close" data-learn-panel-dismiss aria-label="Close">×</button>
+        </div>
+        <div class="learn-panel__search" role="search">
+          <svg class="learn-panel__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            class="learn-panel__search-input"
+            placeholder="Search questions, keywords or topics"
+            aria-label="Search questions, keywords or topics"
+          />
+        </div>
+      </div>
+      <div class="learn-panel__content">
+        <h2 id="learn-panel-quarterly-checkin-title" class="learn-panel__title">What happens at a quarterly check-in?</h2>
+        <p class="learn-panel__text">Each quarter, your expert will connect with you to make sure you're on track. Here's what to expect:</p>
+        <h3 class="learn-panel__subheading">Quarterly tax estimates</h3>
+        <p class="learn-panel__text">Your expert will review your estimated tax payments so you're never caught off guard come tax season.</p>
+        <h3 class="learn-panel__subheading">Books health review</h3>
+        <p class="learn-panel__text">In addition to quarterly estimates, your expert will update you on the health of your books and flag anything that needs your attention.</p>
+        <h3 class="learn-panel__subheading">Tax planning updates</h3>
+        <p class="learn-panel__text">Your expert will revisit your tax plan and let you know if any new opportunities or changes apply to your business.</p>
+        <h3 class="learn-panel__subheading">Your questions answered</h3>
+        <p class="learn-panel__text">Bring any questions you've been saving up — this is dedicated time with your expert to talk through anything on your mind.</p>
+      </div>
+    </aside>
+
+    <aside
+      class="learn-panel"
+      id="learn-panel-guarantees"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="learn-panel-guarantees-title"
+      aria-hidden="true"
+    >
+      <div class="learn-panel__header">
+        <div class="learn-panel__header-top">
+          <button type="button" class="learn-panel__close" data-learn-panel-dismiss aria-label="Close">×</button>
+        </div>
+        <div class="learn-panel__search" role="search">
+          <svg class="learn-panel__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            class="learn-panel__search-input"
+            placeholder="Search questions, keywords or topics"
+            aria-label="Search questions, keywords or topics"
+          />
+        </div>
+      </div>
+      <div class="learn-panel__content">
+        <h2 id="learn-panel-guarantees-title" class="learn-panel__title">Expert 365 Business guarantees</h2>
+        <p class="learn-panel__text">File with confidence knowing your tax return is backed by America's #1 tax preparation provider. See <a href="https://www.intuit.com/legal/terms/en-us/turbotax/online-license/" target="_blank" class="link link--inline">Terms of Service</a> for details.</p>
+        <h3 class="learn-panel__subheading">100% Accurate Calculations Guarantee</h3>
+        <p class="learn-panel__text">If you pay an IRS or state penalty or interest because of a TurboTax calculation error, we'll pay you the penalty and interest. Limitations apply.</p>
+        <h3 class="learn-panel__subheading">Maximum Tax Savings Guarantee—or Your Money Back</h3>
+        <p class="learn-panel__text">If you get a larger refund or smaller tax due from another tax preparation method, we'll refund the applicable TurboTax federal and/or state purchase price paid. Limitations apply.</p>
+        <h3 class="learn-panel__subheading">Full Service Guarantee</h3>
+        <p class="learn-panel__text">When your Full Service expert does your taxes, they'll only sign and file when they know it's 100% correct and you're getting the best outcome possible, guaranteed. Limitations apply.</p>
+        <h3 class="learn-panel__subheading">Business Tax Guarantee</h3>
+        <p class="learn-panel__text">When you file your business taxes with TurboTax, you'll get your maximum tax savings with every business deduction possible, 100% accurate calculations, plus audit support to keep your business protected. Limitations apply.</p>
+        <h3 class="learn-panel__subheading">100% Accurate, Expert-Approved Guarantee</h3>
+        <p class="learn-panel__text">If you pay an IRS or state penalty (or interest) because of an error that a TurboTax tax expert made while providing topic-specific tax advice, a section review, or acting as a signed preparer for your return, we'll pay you the penalty and interest. Limitations apply.</p>
       </div>
     </aside>
 

@@ -328,7 +328,7 @@ a:hover {
 .learn,
 #subscription-expired-panel {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1060px;
   align-self: stretch;
 }
 
@@ -696,8 +696,32 @@ a:hover {
   transition: background 0.12s ease;
 }
 
+.expandable--secondary {
+  background: var(--container-bg-secondary);
+}
+
+.expandable--secondary .expandable__trigger {
+  background: var(--container-bg-secondary);
+}
+
+.expandable--secondary .expandable__trigger:hover {
+  background: var(--container-bg-secondary);
+}
+
+.expandable--secondary .expandable__panel {
+  background: var(--container-bg-secondary);
+}
+
+.expandable--secondary .expandable__panel-inner {
+  background: var(--container-bg-secondary);
+}
+
+.expandable--secondary .btn--outline {
+  background: transparent;
+}
+
 .expandable__trigger:hover {
-  background: color-mix(in srgb, var(--container-bg-secondary) 97%, var(--text-primary));
+  background: var(--container-bg-primary);
 }
 
 .expandable__trigger:focus-visible {
@@ -762,12 +786,12 @@ a:hover {
 }
 
 .expandable__chevron {
-  display: inline-block;
+  display: block;
   width: 24px;
   height: 24px;
-  background-image: url("icons/chevron-down.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
+  flex-shrink: 0;
+  align-self: center;
+  justify-self: center;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -1013,7 +1037,7 @@ a:hover {
 
 .subscription-expired-faq {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1060px;
   margin: 0 auto;
   padding-top: 40px;
   box-sizing: border-box;

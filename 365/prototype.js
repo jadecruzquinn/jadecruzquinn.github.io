@@ -93,6 +93,7 @@
         badge: null,
         section: null,
         startOpen: false,
+        bgSecondary: true,
         text: "Looks like you've already connected your bank. You can update your info anytime.",
         actionLabel: "Update account info",
       },
@@ -128,6 +129,16 @@
     quarterlyReview: [
       {
         type: "expandable",
+        icon: "thumbUp",
+        title: "Your expert is reviewing your books",
+        badge: "progress",
+        section: "In progress",
+        startOpen: false,
+        text: "Sit tight \u2013 your expert is on it! You can reach out if you have questions.",
+        actionLabel: "Start a chat",
+      },
+      {
+        type: "expandable",
         icon: "calAlert",
         title: "Schedule your Q3 check-in",
         badge: "todo",
@@ -136,16 +147,15 @@
         text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
         actionLabel: "Schedule a call",
       },
-      { type: "completed", title: "You completed your welcome call" },
       {
         type: "expandable",
-        icon: "thumbUp",
-        title: "Your expert is reviewing your books",
-        badge: "progress",
-        section: "In progress",
+        icon: "bankComplete",
+        title: "You completed your welcome call",
+        badge: null,
+        section: null,
         startOpen: false,
-        text: "Sit tight \u2013 your expert is on it! You can reach out if you have questions.",
-        actionLabel: "Start a chat",
+        bgSecondary: true,
+        text: "Your expert finished setting up your account. They\u2019ll reach out via chat if they need more info.",
       },
       {
         type: "expandable",
@@ -268,7 +278,7 @@
     var uid = stateKey + "-" + index;
     var root = document.createElement("div");
     root.className =
-      "expandable " + (card.startOpen ? "is-expanded" : "is-collapsed");
+      "expandable " + (card.startOpen ? "is-expanded" : "is-collapsed") + (card.bgSecondary ? " expandable--secondary" : "");
     root.setAttribute("data-expandable", "");
 
     var btn = document.createElement("button");
@@ -284,10 +294,19 @@
     label.textContent = card.title;
     btn.appendChild(label);
 
-    if (card.badge) { btn.appendChild(badgeEl(card.badge)); }
+    if (card.badge) {
+      btn.appendChild(badgeEl(card.badge));
+    } else {
+      var badgePlaceholder = document.createElement("span");
+      btn.appendChild(badgePlaceholder);
+    }
 
-    var chev = document.createElement("span");
+    var chev = document.createElement("img");
     chev.className = "expandable__chevron";
+    chev.src = "icons/chevron-down.svg";
+    chev.alt = "";
+    chev.width = 24;
+    chev.height = 24;
     chev.setAttribute("aria-hidden", "true");
     btn.appendChild(chev);
 
@@ -390,6 +409,46 @@
     }
     updateDashboardLayout(stateKey);
     renderState(stateKey);
+    reorderLearnCards(stateKey);
+  }
+
+  function reorderLearnCards(stateKey) {
+    var row = document.querySelector(".learn__row");
+    if (!row) return;
+    var tax = row.querySelector(".mini-card--learn-tax");
+    var started = row.querySelector(".mini-card--learn-started");
+    var included = row.querySelector(".mini-card--learn-included");
+    var checkin = row.querySelector(".mini-card--learn-quarterly-checkin");
+    var guarantees = row.querySelector(".mini-card--learn-guarantees");
+    if (!tax || !started || !included || !checkin || !guarantees) return;
+
+    if (stateKey === "quarterlyReview") {
+      // Quarterly review: tax, checkin, guarantees only
+      started.style.display = "none";
+      included.style.display = "none";
+      checkin.style.display = "";
+      guarantees.style.display = "";
+      row.appendChild(tax);
+      row.appendChild(checkin);
+      row.appendChild(guarantees);
+    } else {
+      // All other states: show started, included, tax (hide quarterly-only cards)
+      checkin.style.display = "none";
+      guarantees.style.display = "none";
+      started.style.display = "";
+      included.style.display = "";
+      if (stateKey === "onboarding" || stateKey === "welcomeCall") {
+        // started → included → tax
+        row.appendChild(started);
+        row.appendChild(included);
+        row.appendChild(tax);
+      } else {
+        // taxFiling / subscriptionExpired: tax → started → included
+        row.appendChild(tax);
+        row.appendChild(started);
+        row.appendChild(included);
+      }
+    }
   }
 
   function renderState(stateKey) {
@@ -459,6 +518,8 @@
     started: "learn-panel-started",
     included: "learn-panel-included",
     tax: "learn-panel-tax",
+    "quarterly-checkin": "learn-panel-quarterly-checkin",
+    guarantees: "learn-panel-guarantees",
   };
 
   function openLearnPanel(key) {
