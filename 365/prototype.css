@@ -225,8 +225,8 @@ a:hover {
   flex-shrink: 0;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: stretch;
+  justify-content: flex-start;
   padding: 0 40px;
   background: var(--container-bg-primary);
   border-bottom: 1px solid var(--container-border-primary);
@@ -234,46 +234,81 @@ a:hover {
 
 .header__actions {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: stretch;
+  flex: 1;
+  justify-content: center;
 }
 
-/* ——— Header workflow pills ——— */
+/* ——— Header workflow tabs ——— */
+.state-switcher-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
 .state-switcher {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  align-items: stretch;
+  gap: 0;
+}
+
+.state-switcher-fade {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .state-switcher {
+    padding-right: 36px;
+  }
+
+  .state-switcher-fade {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 0 6px 0 28px;
+    background: linear-gradient(to right, transparent, var(--container-bg-primary) 50%);
+    pointer-events: none;
+  }
+
+  .state-switcher-fade__chevron {
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+  }
 }
 
 .state-switcher__btn {
-  padding: 6px 16px;
-  border-radius: 20px;
+  position: relative;
+  padding: 0 20px;
   font-family: 'AvenirNext forINTUIT', sans-serif;
   font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: var(--text-primary);
-  background: var(--container-bg-primary);
-  border: 1px solid var(--container-border-primary);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  box-shadow: inset 0 -2px 0 transparent;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+  transition: color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.state-switcher__btn:hover {
+  color: var(--text-primary);
 }
 
 .state-switcher__btn:focus-visible {
   outline: 2px solid var(--link);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 .state-switcher__btn.is-active {
-  background: var(--text-primary);
-  color: var(--text-inverse);
-  border-color: var(--text-primary);
-}
-
-.state-switcher__btn.is-active:hover {
-  background: color-mix(in srgb, var(--text-primary) 92%, var(--text-inverse));
-  color: var(--text-inverse);
+  color: var(--action-standard);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--action-standard);
 }
 
 /* ——— Main ——— */
@@ -284,7 +319,17 @@ a:hover {
   margin-top: 60px;
   padding: 40px 80px;
   box-sizing: border-box;
-  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-default,
+.learn,
+#subscription-expired-panel {
+  width: 100%;
+  max-width: 1000px;
+  align-self: stretch;
 }
 
 .welcome {
@@ -328,6 +373,10 @@ a:hover {
 }
 
 .dashboard-grid[data-workflow-state="welcomeCall"] .left-col-panel--expert-welcome {
+  display: flex;
+}
+
+.dashboard-grid[data-workflow-state="quarterlyReview"] .left-col-panel--quarterly-review {
   display: flex;
 }
 
@@ -406,7 +455,7 @@ a:hover {
   display: block;
   margin-top: 20px;
   width: 100%;
-  padding: 10px;
+  padding: 0;
   box-sizing: border-box;
   font-family: 'AvenirNext forINTUIT', sans-serif;
   font-size: 20px;
@@ -511,9 +560,21 @@ a:hover {
   border-radius: var(--radius-large);
 }
 
-.dashboard-grid[data-workflow-state="welcomeCall"] .info-banner,
-.dashboard-grid[data-workflow-state="taxFiling"] .info-banner {
+/* hide onboarding banner on all non-onboarding states */
+.dashboard-grid[data-workflow-state="welcomeCall"] .info-banner--onboarding,
+.dashboard-grid[data-workflow-state="quarterlyReview"] .info-banner--onboarding,
+.dashboard-grid[data-workflow-state="taxFiling"] .info-banner--onboarding,
+.dashboard-grid[data-workflow-state="subscriptionExpired"] .info-banner--onboarding {
   display: none;
+}
+
+/* welcome-call billing banner: hidden by default, shown only on welcomeCall */
+.info-banner--welcome-call {
+  display: none;
+}
+
+.dashboard-grid[data-workflow-state="welcomeCall"] .info-banner--welcome-call {
+  display: flex;
 }
 
 .info-banner__icon {
@@ -523,7 +584,7 @@ a:hover {
 
 .info-banner__title {
   margin: 0 0 4px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 20px;
   color: var(--text-primary);
@@ -531,7 +592,7 @@ a:hover {
 
 .info-banner__text {
   margin: 0 0 16px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
   color: var(--text-primary);
@@ -539,7 +600,7 @@ a:hover {
 
 .info-banner .link,
 .info-banner a {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .link {
@@ -574,6 +635,7 @@ a:hover {
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  min-height: 0;
 }
 
 /* ——— Task sections ——— */
@@ -706,29 +768,22 @@ a:hover {
   background-image: url("icons/chevron-down.svg");
   background-repeat: no-repeat;
   background-size: contain;
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease-in-out;
 }
 
 .expandable.is-expanded .expandable__chevron {
-  background-image: url("icons/chevron-up.svg");
+  transform: rotate(180deg);
 }
 
 .expandable__panel {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.15s ease-in;
-  display: block !important;
+  transition: max-height 0.2s ease-in-out;
   border-top: 0;
 }
 
 .expandable.is-expanded .expandable__panel {
-  max-height: 1000px;
-  transition: max-height 0.3s ease-out;
   border-top: 1px solid var(--container-border-primary);
-}
-
-.expandable.is-collapsed .expandable__panel {
-  transition: max-height 0.15s ease-in;
 }
 
 .expandable__panel-inner {
@@ -843,7 +898,7 @@ a:hover {
 .subscription-expired-help-link {
   display: block;
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 24px;
   color: var(--link);
@@ -875,18 +930,22 @@ a:hover {
 
 .subscription-expired-alert__title {
   margin: 0 0 4px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 20px;
   color: var(--text-primary);
 }
 
 .subscription-expired-alert__text {
   margin: 0 0 16px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 20px;
   color: var(--text-primary);
+}
+
+.subscription-expired-alert .link {
+  font-size: 14px;
 }
 
 .subscription-expired-cards img[src='turbotax.svg'],
@@ -928,6 +987,9 @@ a:hover {
 }
 
 .subscription-expired-promo-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
@@ -1010,10 +1072,27 @@ a:hover {
   flex-shrink: 0;
   font-size: 12px;
   line-height: 1;
+  transition: transform 0.2s ease-in-out;
+}
+
+.subscription-expired-faq-item__trigger[aria-expanded="true"] .subscription-expired-faq-item__chevron {
+  transform: rotate(180deg);
 }
 
 .subscription-expired-faq-item__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease-in-out, margin 0.2s ease-in-out;
+  margin: 0;
+}
+
+.subscription-expired-faq-item__answer.is-open {
+  grid-template-rows: 1fr;
   margin: 12px 0 0;
+}
+
+.subscription-expired-faq-item__answer-inner {
+  overflow: hidden;
 }
 
 .subscription-expired-faq-item__answer p {
@@ -1280,14 +1359,28 @@ a:hover {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+  .state-switcher-wrap {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
   .state-switcher {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* hide scrollbar visually */
+    scrollbar-width: none;
+  }
+
+  .state-switcher::-webkit-scrollbar {
+    display: none;
   }
 
   .header__actions {
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+    width: 100%;
   }
 
   .sidebar {
@@ -1314,6 +1407,7 @@ a:hover {
     right: 0;
     margin-left: 0;
     width: 100%;
+    padding: 0 12px;
   }
 
   .main {

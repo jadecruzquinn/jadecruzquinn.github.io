@@ -30,7 +30,8 @@
         icon: "video",
         title: "Schedule your welcome call",
         badge: "todo",
-        startOpen: true,
+        section: "To do",
+        startOpen: false,
         text: "Your expert will finish setting up your account during your welcome call.",
         actionLabel: "Schedule a call",
       },
@@ -39,24 +40,17 @@
         icon: "question",
         title: "Answer questions for your expert",
         badge: "optional",
+        section: null,
         startOpen: false,
         text: "Give your expert some info before you meet to save time during your call.",
         actionLabel: "Go to questions",
       },
       {
         type: "expandable",
-        icon: "bank",
-        title: "Automate your bank transactions",
-        badge: "todo",
-        startOpen: false,
-        text: "Connect your bank account to automate your transactions.",
-        actionLabel: "Connect bank",
-      },
-      {
-        type: "expandable",
         icon: "thumbUp",
         title: "Your expert will review your books",
         badge: "upcoming",
+        section: "Up next",
         startOpen: false,
         text: "You don't have to do anything. If your expert needs more info, they'll reach out.",
       },
@@ -65,6 +59,7 @@
         icon: "tax",
         title: "File your 2025 taxes",
         badge: "upcoming",
+        section: null,
         startOpen: false,
         text: "We'll let you know when it's time to file\u2014it's included!",
       },
@@ -72,18 +67,10 @@
     welcomeCall: [
       {
         type: "expandable",
-        icon: "calendar",
-        title: "Your welcome call is coming up",
-        badge: "upcoming",
-        startOpen: false,
-        text: "Your appointment is at 11:00am on October 1, 2025.",
-        actionLabel: "Reschedule",
-      },
-      {
-        type: "expandable",
         icon: "thumbUp",
         title: "Your expert is reviewing your books",
         badge: "progress",
+        section: "To do",
         startOpen: false,
         text: "Sit tight — your expert is on it! You can reach out if you have questions.",
         actionLabel: "Start a chat",
@@ -93,6 +80,40 @@
         icon: "calAlert",
         title: "Schedule your Q3 check-in",
         badge: "todo",
+        section: null,
+        startOpen: false,
+        text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
+        actionLabel: "Schedule a call",
+      },
+      {
+        type: "expandable",
+        icon: "calendar",
+        title: "Your welcome call is coming up",
+        badge: "upcoming",
+        section: "Up next",
+        startOpen: false,
+        text: "Your appointment is at 11:00am on October 1, 2025.",
+        actionLabel: "Reschedule",
+      },
+      {
+        type: "expandable",
+        icon: "tax",
+        title: "File your 2025 taxes",
+        badge: "upcoming",
+        section: null,
+        startOpen: false,
+        text: "We'll let you know when it's time to file\u2014it's included!",
+      },
+    ],
+    quarterlyReview: [
+      { type: "completed", title: "You completed your welcome call" },
+      { type: "completed", title: "Your expert reviewed your books" },
+      {
+        type: "expandable",
+        icon: "calAlert",
+        title: "Schedule your Q3 check-in",
+        badge: "todo",
+        section: "To do",
         startOpen: false,
         text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
         actionLabel: "Schedule a call",
@@ -102,26 +123,20 @@
         icon: "tax",
         title: "File your 2025 taxes",
         badge: "upcoming",
+        section: "Up next",
         startOpen: false,
         text: "We'll let you know when it's time to file\u2014it's included!",
       },
     ],
     taxFiling: [
-      { type: "completed", title: "You completed your welcome call" },
-      {
-        type: "expandable",
-        icon: "tax",
-        title: "File your 2025 taxes",
-        badge: "todo",
-        startOpen: false,
-        text: "Your expert is ready when you are. Filing is included, at no extra cost.",
-        actionLabel: "Start taxes",
-      },
+      { type: "completed", title: "Your expert reviewed your books" },
+      { type: "completed", title: "You completed your Q3 check-in" },
       {
         type: "expandable",
         icon: "handMoney",
         title: "Your expert is working on your taxes",
         badge: "progress",
+        section: "To do",
         startOpen: false,
         text: "Rest assured, your taxes are being handled. If you have questions in the meantime, ask them here.",
         actionLabel: "Go to taxes",
@@ -152,14 +167,29 @@
     }
   }
 
+  function lockTaskColumnHeight() {
+    var col = document.querySelector(".right-column-tasks");
+    if (!col) return;
+    var current = col.offsetHeight;
+    var locked = parseInt(col.style.minHeight, 10) || 0;
+    if (current > locked) {
+      col.style.minHeight = current + "px";
+    }
+  }
+
   function toggle(root) {
     var willExpand = !root.classList.contains("is-expanded");
     if (willExpand) {
       document.querySelectorAll("#js-task-cards [data-expandable]").forEach(function (card) {
-        if (card !== root) setExpanded(card, false);
+        if (card !== root && card.classList.contains("is-expanded")) {
+          setExpanded(card, false);
+        }
       });
+      setExpanded(root, true);
+      setTimeout(lockTaskColumnHeight, 160);
+    } else {
+      setExpanded(root, false);
     }
-    setExpanded(root, willExpand);
   }
 
   function badgeEl(kind) {
@@ -337,10 +367,28 @@
     var host = document.getElementById("js-task-cards");
     if (!host) return;
     host.innerHTML = "";
+    var col = document.querySelector(".right-column-tasks");
+    if (col) col.style.minHeight = "";
     var items = STATE_CARDS[stateKey];
     if (!items) return;
 
+    var currentSection = null;
+    var sectionEl = null;
+
     items.forEach(function (card, i) {
+      if (card.section && card.section !== currentSection) {
+        currentSection = card.section;
+        sectionEl = document.createElement("div");
+        sectionEl.className = "task-section";
+        var heading = document.createElement("h3");
+        heading.className = "section-heading";
+        heading.textContent = card.section;
+        sectionEl.appendChild(heading);
+        host.appendChild(sectionEl);
+      } else if (card.section === null || card.section === undefined) {
+        // card belongs to no new section; keep appending to current sectionEl if one is active
+      }
+
       var node;
       if (card.type === "expandable") {
         node = createExpandable(card, stateKey, i);
@@ -349,7 +397,14 @@
       } else if (card.type === "completedOpen") {
         node = createCompletedOpenCard(card);
       }
-      if (node) host.appendChild(node);
+
+      if (node) {
+        if (sectionEl) {
+          sectionEl.appendChild(node);
+        } else {
+          host.appendChild(node);
+        }
+      }
     });
   }
 
@@ -567,11 +622,6 @@
     }
   }
 
-  var SUBEXP_FAQ_CHEVRON_COLLAPSED =
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var SUBEXP_FAQ_CHEVRON_EXPANDED =
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 15L12 9L6 15" stroke="#21262a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
   function initSubscriptionExpiredFaq() {
     document.body.addEventListener("click", function (e) {
       var btn = e.target.closest(".subscription-expired-faq-item__trigger");
@@ -581,13 +631,20 @@
       e.preventDefault();
       var item = btn.closest(".subscription-expired-faq-item");
       var answer = item && item.querySelector(".subscription-expired-faq-item__answer");
-      var chev = btn.querySelector(".subscription-expired-faq-item__chevron");
       if (!answer) return;
-      var open = btn.getAttribute("aria-expanded") === "true";
-      var nextOpen = !open;
+      var nextOpen = btn.getAttribute("aria-expanded") !== "true";
+
+      // Collapse all other FAQ items
+      panelRoot.querySelectorAll(".subscription-expired-faq-item").forEach(function (otherItem) {
+        if (otherItem === item) return;
+        var otherBtn = otherItem.querySelector(".subscription-expired-faq-item__trigger");
+        var otherAnswer = otherItem.querySelector(".subscription-expired-faq-item__answer");
+        if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+        if (otherAnswer) otherAnswer.classList.remove("is-open");
+      });
+
       btn.setAttribute("aria-expanded", nextOpen ? "true" : "false");
-      answer.hidden = !nextOpen;
-      if (chev) chev.innerHTML = nextOpen ? SUBEXP_FAQ_CHEVRON_EXPANDED : SUBEXP_FAQ_CHEVRON_COLLAPSED;
+      answer.classList.toggle("is-open", nextOpen);
     });
   }
 
