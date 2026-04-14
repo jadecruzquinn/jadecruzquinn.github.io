@@ -328,7 +328,7 @@ a:hover {
 .learn,
 #subscription-expired-panel {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   align-self: stretch;
 }
 
@@ -1013,7 +1013,7 @@ a:hover {
 
 .subscription-expired-faq {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 40px;
   box-sizing: border-box;
