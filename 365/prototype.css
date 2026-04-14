@@ -1959,3 +1959,230 @@ body.learn-panels-open {
 .learn-panel__inline-strong {
   font-weight: 700;
 }
+
+/* ——— Questions flow ——— */
+.questions-flow {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--container-bg-primary);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin-left: 200px;
+  margin-top: var(--header-height);
+}
+
+.questions-flow[hidden] {
+  display: none;
+}
+
+.questions-flow__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px 40px;
+  box-sizing: border-box;
+}
+
+.questions-flow__header {
+  padding: 32px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.questions-flow__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--link);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.questions-flow__close:hover {
+  text-decoration: underline;
+}
+
+.questions-flow__progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--container-bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.questions-flow__progress-fill {
+  height: 100%;
+  background: var(--action-standard);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.questions-flow__body {
+  flex: 1;
+}
+
+.questions-step__counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+}
+
+.questions-step__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.questions-step__hint {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+  margin: 0 0 28px;
+}
+
+.questions-step__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.questions-option {
+  display: block;
+  cursor: pointer;
+}
+
+.questions-option input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.questions-option__box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-large);
+  background: var(--container-bg-primary);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.questions-option__box::before {
+  content: '';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--container-border-primary);
+  border-radius: 50%;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.questions-step__options--checkboxes .questions-option__box::before {
+  border-radius: 4px;
+}
+
+.questions-option input:checked ~ .questions-option__box {
+  border-color: var(--action-standard);
+  background: var(--container-bg-info);
+}
+
+.questions-option input:checked ~ .questions-option__box::before {
+  border-color: var(--action-standard);
+  background: var(--action-standard);
+  background-image: url("icons/complete.svg");
+  background-size: 14px 14px;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(10);
+}
+
+.questions-option__label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.questions-flow__footer {
+  display: flex;
+  gap: 12px;
+  padding-top: 32px;
+  justify-content: flex-end;
+}
+
+.questions-flow__btn-back {
+  background: none;
+  border: 1px solid var(--container-border-primary);
+  border-radius: var(--radius-small);
+  padding: 10px 24px;
+  font-family: 'AvenirNext forINTUIT', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.questions-flow__btn-back:hover {
+  background: var(--container-bg-secondary);
+}
+
+/* Done screen */
+.questions-step--done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.questions-done__icon {
+  width: 72px;
+  height: 72px;
+  background: #e8f5ef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.questions-done__title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 36px;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.questions-done__text {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+  max-width: 400px;
+}
+
+.questions-done__cta {
+  min-width: 200px;
+}

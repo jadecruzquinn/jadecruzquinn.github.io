@@ -768,6 +768,145 @@
     </aside>
   </div>
 
+  <!-- Questions flow overlay -->
+  <div id="questions-flow" class="questions-flow" aria-hidden="true" hidden>
+    <div class="questions-flow__inner">
+      <div class="questions-flow__header">
+        <button type="button" class="questions-flow__close" id="questions-flow-close" aria-label="Close questions">
+          <img src="icons/chevron-left.svg" width="20" height="20" alt="" /> Back to dashboard
+        </button>
+        <div class="questions-flow__progress-bar">
+          <div class="questions-flow__progress-fill" id="questions-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="questions-flow__body">
+        <!-- Step 1 -->
+        <div class="questions-step" data-step="1">
+          <p class="questions-step__counter">Question 1 of 4</p>
+          <h2 class="questions-step__title">Do you have separate accounts for your business?</h2>
+          <p class="questions-step__hint">This includes banking and credit cards used for your business transactions.</p>
+          <div class="questions-step__options" role="radiogroup" aria-labelledby="q1-label">
+            <label class="questions-option">
+              <input type="radio" name="q1" value="yes" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">Yes, I keep them separate</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="radio" name="q1" value="no" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">No, they're mixed together</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="radio" name="q1" value="some" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">Some are separate, some aren't</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="questions-step" data-step="2" hidden>
+          <p class="questions-step__counter">Question 2 of 4</p>
+          <h2 class="questions-step__title">Are you maintaining books for more than one business?</h2>
+          <p class="questions-step__hint">QuickBooks Simple Start is included in your Expert 365 Business subscription.</p>
+          <div class="questions-step__options" role="radiogroup">
+            <label class="questions-option">
+              <input type="radio" name="q2" value="yes" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">Yes, more than one</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="radio" name="q2" value="no" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">No, just one</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="questions-step" data-step="3" hidden>
+          <p class="questions-step__counter">Question 3 of 4</p>
+          <h2 class="questions-step__title">How many states do you need to file business taxes in?</h2>
+          <p class="questions-step__hint">This helps your expert prepare for tax season.</p>
+          <div class="questions-step__options" role="radiogroup">
+            <label class="questions-option">
+              <input type="radio" name="q3" value="one" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">Just 1 state</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="radio" name="q3" value="two-five" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">2–5 states</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="radio" name="q3" value="more" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">More than 5 states</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="questions-step" data-step="4" hidden>
+          <p class="questions-step__counter">Question 4 of 4</p>
+          <h2 class="questions-step__title">Tell us about your business</h2>
+          <p class="questions-step__hint">Select all that apply.</p>
+          <div class="questions-step__options questions-step__options--checkboxes" role="group">
+            <label class="questions-option">
+              <input type="checkbox" name="q4" value="sole-prop" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">I'm a sole proprietor or single-member LLC</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="checkbox" name="q4" value="employees" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">I have employees or contractors</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="checkbox" name="q4" value="inventory" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">I manage inventory</span>
+              </span>
+            </label>
+            <label class="questions-option">
+              <input type="checkbox" name="q4" value="ecommerce" />
+              <span class="questions-option__box">
+                <span class="questions-option__label">I sell online or through an app</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Done screen -->
+        <div class="questions-step questions-step--done" data-step="done" hidden>
+          <div class="questions-done__icon">
+            <img src="icons/complete.svg" width="48" height="48" alt="" />
+          </div>
+          <h2 class="questions-done__title">Thanks, Junxy!</h2>
+          <p class="questions-done__text">Your expert will review your answers before your welcome call. You can update them anytime.</p>
+          <button type="button" class="btn btn--primary questions-done__cta" id="questions-done-btn">Back to dashboard</button>
+        </div>
+      </div>
+
+      <div class="questions-flow__footer" id="questions-footer">
+        <button type="button" class="btn btn--ghost questions-flow__btn-back" id="questions-back">Back</button>
+        <button type="button" class="btn btn--primary questions-flow__btn-continue" id="questions-continue">Continue</button>
+      </div>
+    </div>
+  </div>
+
   <script src="prototype.js"></script>
 </body>
 </html>
