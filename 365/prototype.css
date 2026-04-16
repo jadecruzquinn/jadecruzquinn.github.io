@@ -1171,10 +1171,13 @@ a:hover {
   color: var(--text-primary);
 }
 
+.task-card--completed-open .task-card__panel {
+  background: var(--container-bg-secondary);
+}
+
 .task-card--completed-open .task-card__body {
   padding: 16px 20px 20px;
   background: var(--container-bg-secondary);
-  border-top: 1px solid var(--container-border-primary);
 }
 .task-card__chevron {
   margin-left: auto;

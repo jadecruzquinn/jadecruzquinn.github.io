@@ -371,7 +371,7 @@
 
   function createCompletedOpenCard(card) {
     var root = document.createElement("div");
-    // Start collapsed, secondary bg to match other completed cards
+    // Start collapsed
     root.className = "task-card task-card--completed task-card--completed-open";
     var row = document.createElement("div");
     row.className = "task-card__row";
@@ -391,9 +391,17 @@
     row.appendChild(check);
     row.appendChild(t);
     row.appendChild(chevron);
+
+    // Use overflow + max-height for smooth animation (same pattern as .expandable__panel)
+    var panel = document.createElement("div");
+    panel.className = "task-card__panel";
+    panel.style.overflow = "hidden";
+    panel.style.maxHeight = "0";
+    panel.style.transition = "max-height 0.2s ease-in-out";
+    panel.style.borderTop = "0";
+
     var body = document.createElement("div");
     body.className = "task-card__body";
-    body.hidden = true; // start collapsed
     var p = document.createElement("p");
     p.className = "task-card__body-text";
     p.textContent = card.text;
@@ -405,26 +413,38 @@
       action.textContent = card.actionLabel;
       body.appendChild(action);
     }
+    panel.appendChild(body);
     root.appendChild(row);
-    root.appendChild(body);
+    root.appendChild(panel);
 
-    // Toggle collapse on row click — ∨ collapsed, ∧ expanded
-    // Accordion: close siblings in the same section when opening
-    row.addEventListener("click", function() {
-      var isNowOpen = !root.classList.contains("is-open");
-      // Close all other completedOpen cards in the same section/host
+    function closeSiblings() {
       var host = root.closest(".task-section") || root.closest(".right-column-tasks") || root.parentNode;
       host.querySelectorAll(".task-card--completed-open").forEach(function(sibling) {
-        if (sibling !== root) {
+        if (sibling !== root && sibling.classList.contains("is-open")) {
           sibling.classList.remove("is-open");
-          var sibBody = sibling.querySelector(".task-card__body");
+          var sibPanel = sibling.querySelector(".task-card__panel");
           var sibChevron = sibling.querySelector(".task-card__chevron");
-          if (sibBody) sibBody.hidden = true;
+          if (sibPanel) {
+            sibPanel.style.borderTop = "0";
+            sibPanel.style.maxHeight = "0";
+          }
           if (sibChevron) sibChevron.style.transform = "";
         }
       });
+    }
+
+    // Toggle on row click — ∨ collapsed, ∧ expanded
+    row.addEventListener("click", function() {
+      var isNowOpen = !root.classList.contains("is-open");
+      closeSiblings();
       root.classList.toggle("is-open", isNowOpen);
-      body.hidden = !isNowOpen;
+      if (isNowOpen) {
+        panel.style.borderTop = "1px solid var(--container-border-primary)";
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      } else {
+        panel.style.borderTop = "0";
+        panel.style.maxHeight = "0";
+      }
       chevron.style.transform = isNowOpen ? "rotate(180deg)" : "";
     });
 
