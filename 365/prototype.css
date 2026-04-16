@@ -717,7 +717,8 @@ a:hover {
   background: var(--container-bg-secondary);
 }
 
-.expandable--secondary .btn--outline {
+.expandable--secondary .btn--outline,
+.task-card--completed-open .btn--outline {
   background: transparent;
 }
 
