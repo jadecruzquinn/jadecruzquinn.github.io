@@ -649,10 +649,29 @@
           qFlow.hidden = true;
           qFlow.setAttribute("aria-hidden", "true");
         }
+        // Close billing flow if open
+        var bFlow = document.getElementById("billing-flow");
+        if (bFlow && !bFlow.hidden) {
+          bFlow.hidden = true;
+          bFlow.setAttribute("aria-hidden", "true");
+        }
         var v = link.getAttribute("data-main-view");
         if (v) showView(v);
       });
     });
+
+    // Also close billing flow when clicking the brand logo
+    var brandEl = document.querySelector(".sidebar__brand");
+    if (brandEl) {
+      brandEl.addEventListener("click", function() {
+        var bFlow = document.getElementById("billing-flow");
+        if (bFlow && !bFlow.hidden) {
+          bFlow.hidden = true;
+          bFlow.setAttribute("aria-hidden", "true");
+        }
+        showView("dashboard");
+      });
+    }
 
     document.body.addEventListener("click", function (e) {
       if (e.target.closest(".js-go-docs")) {
