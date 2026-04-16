@@ -2720,20 +2720,19 @@ body.learn-panels-open {
 }
 
 
-/* ── Notifications pill — welcome call only, top-right of header ── */
+/* ── Notifications label — welcome call only, top-right of header ── */
 .notifications-bar {
   display: none;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  background: var(--container-bg-secondary);
-  border: 1px solid var(--container-border-primary);
-  border-radius: 20px;
+  padding: 0 4px;
+  background: none;
+  border: none;
   font-family: 'AvenirNext forINTUIT', sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-secondary);
-  cursor: pointer;
+  cursor: default;
   flex-shrink: 0;
   margin-left: auto;
   white-space: nowrap;
@@ -2762,7 +2761,7 @@ body.learn-panels-open {
 /* ── Meeting toast ── */
 .meeting-toast {
   position: fixed;
-  top: var(--header-height, 60px);
+  top: calc(var(--header-height, 60px) + 16px);
   right: 24px;
   z-index: 200;
   background: #fff;
