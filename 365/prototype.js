@@ -953,6 +953,14 @@
     if (backBtn) backBtn.addEventListener("click", closeFlow);
     if (placeOrderBtn) placeOrderBtn.addEventListener("click", closeFlow);
 
+    // Close when clicking left nav items or logo
+    document.body.addEventListener("click", function(e) {
+      if (flow.hidden) return;
+      if (e.target.closest(".js-main-nav") || e.target.closest(".sidebar__brand") || e.target.closest(".sidebar__logo")) {
+        closeFlow();
+      }
+    });
+
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape" && !flow.hidden) closeFlow();
     });
