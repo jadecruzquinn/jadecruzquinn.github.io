@@ -234,7 +234,7 @@ a:hover {
 
 .header__actions {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex: 1;
   justify-content: center;
   position: relative;
@@ -1146,7 +1146,8 @@ a:hover {
 }
 
 .task-card--completed-open .task-card__row {
-  background: var(--container-bg-secondary);
+  background: var(--container-bg-primary);
+  cursor: pointer;
 }
 
 .task-card__check {
@@ -1173,6 +1174,11 @@ a:hover {
   padding: 16px 20px 20px;
   background: var(--container-bg-primary);
   border-top: 1px solid var(--container-border-primary);
+}
+.task-card__chevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .task-card__body-text {
