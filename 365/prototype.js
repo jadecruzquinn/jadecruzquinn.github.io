@@ -857,11 +857,14 @@
       flow.setAttribute("aria-hidden", "true");
     }
 
-    // Open on "Go to questions" button click
+    // Open on "Go to questions" or "Edit responses" button click
     document.body.addEventListener("click", function(e) {
       var btn = e.target.closest(".btn");
-      if (btn && btn.textContent.trim() === "Go to questions") {
-        openFlow();
+      if (btn) {
+        var label = btn.textContent.trim();
+        if (label === "Go to questions" || label === "Edit responses") {
+          openFlow();
+        }
       }
     });
 
