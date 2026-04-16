@@ -234,9 +234,10 @@ a:hover {
 
 .header__actions {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   flex: 1;
   justify-content: center;
+  gap: 16px;
 }
 
 /* ——— Header workflow tabs ——— */
@@ -2719,40 +2720,30 @@ body.learn-panels-open {
 }
 
 
-/* ── Notifications bar — welcome call only ── */
+/* ── Notifications pill — welcome call only, top-right of header ── */
 .notifications-bar {
   display: none;
   align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  background: var(--container-bg-primary);
-  border-bottom: 1px solid var(--container-border-primary);
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--container-bg-secondary);
+  border: 1px solid var(--container-border-primary);
+  border-radius: 20px;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
-  position: fixed;
-  top: 60px;
-  left: 200px;
-  right: 0;
-  z-index: 99;
+  flex-shrink: 0;
+  margin-left: auto;
+  white-space: nowrap;
 }
 .notifications-bar:not([hidden]) {
   display: flex;
 }
-/* Push main content down to account for notifications bar (~37px) */
-.notifications-bar:not([hidden]) ~ .main {
-  margin-top: calc(60px + 37px);
-}
 @media (max-width: 700px) {
   .notifications-bar {
-    left: 0;
-    top: auto; /* sits below mobile-top-bar, which is not fixed */
-    position: relative;
-  }
-  .notifications-bar:not([hidden]) ~ .main {
-    margin-top: 60px; /* reset — mobile header handles its own offset */
+    display: none !important;
   }
 }
 .notifications-bar__icon {
