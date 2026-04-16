@@ -409,10 +409,23 @@
     root.appendChild(body);
 
     // Toggle collapse on row click — ∨ collapsed, ∧ expanded
+    // Accordion: close siblings in the same section when opening
     row.addEventListener("click", function() {
-      var open = root.classList.toggle("is-open");
-      body.hidden = !open;
-      chevron.style.transform = open ? "rotate(180deg)" : "";
+      var isNowOpen = !root.classList.contains("is-open");
+      // Close all other completedOpen cards in the same section/host
+      var host = root.closest(".task-section") || root.closest(".right-column-tasks") || root.parentNode;
+      host.querySelectorAll(".task-card--completed-open").forEach(function(sibling) {
+        if (sibling !== root) {
+          sibling.classList.remove("is-open");
+          var sibBody = sibling.querySelector(".task-card__body");
+          var sibChevron = sibling.querySelector(".task-card__chevron");
+          if (sibBody) sibBody.hidden = true;
+          if (sibChevron) sibChevron.style.transform = "";
+        }
+      });
+      root.classList.toggle("is-open", isNowOpen);
+      body.hidden = !isNowOpen;
+      chevron.style.transform = isNowOpen ? "rotate(180deg)" : "";
     });
 
     return root;
