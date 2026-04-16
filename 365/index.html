@@ -41,9 +41,9 @@
               <img src="icons/chevron-right.svg" class="state-switcher-fade__chevron" alt="" />
             </div>
           </div>
-          <!-- Notifications pill — welcome call only, top right of header -->
+          <!-- Notifications — welcome call only, top right of header -->
           <div id="notifications-bar" class="notifications-bar" hidden>
-            <img src="icons/notification.svg" width="16" height="16" alt="" class="notifications-bar__icon" />
+            <img src="icons/notification.svg" width="20" height="20" alt="" class="notifications-bar__icon" />
             <span class="notifications-bar__label">Notifications</span>
             <span class="notifications-bar__dot" aria-hidden="true"></span>
           </div>
@@ -1111,9 +1111,12 @@
                 <div class="billing-input-wrap billing-input-wrap--icons">
                   <input type="text" id="cc-number" class="billing-input" placeholder="" autocomplete="cc-number" />
                   <div class="billing-card-icons">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" height="12" alt="Visa" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" height="20" alt="Mastercard" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/200px-American_Express_logo_%282018%29.svg.png" height="16" alt="Amex" />
+                    <!-- Visa -->
+                    <svg height="16" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg" aria-label="Visa"><text x="0" y="16" font-family="Arial,sans-serif" font-size="17" font-weight="900" font-style="italic" fill="#1A1F71">VISA</text></svg>
+                    <!-- Mastercard -->
+                    <svg height="20" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" aria-label="Mastercard"><rect x="0" y="0" width="24" height="24" rx="4" fill="#EB001B"/><rect x="14" y="0" width="24" height="24" rx="4" fill="#F79E1B"/><rect x="14" y="0" width="10" height="24" fill="#FF5F00"/></svg>
+                    <!-- Amex -->
+                    <svg height="18" viewBox="0 0 50 18" xmlns="http://www.w3.org/2000/svg" aria-label="Amex"><rect width="50" height="18" rx="3" fill="#2E77BC"/><text x="4" y="13" font-family="Arial,sans-serif" font-size="9" font-weight="900" fill="white" letter-spacing="0.5">AMEX</text></svg>
                   </div>
                 </div>
               </div>

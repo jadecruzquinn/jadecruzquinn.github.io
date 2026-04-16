@@ -371,7 +371,8 @@
 
   function createCompletedOpenCard(card) {
     var root = document.createElement("div");
-    root.className = "task-card task-card--completed task-card--completed-open is-open";
+    // Start collapsed, secondary bg to match other completed cards
+    root.className = "task-card task-card--completed task-card--completed-open";
     var row = document.createElement("div");
     row.className = "task-card__row";
     var check = document.createElement("span");
@@ -386,11 +387,13 @@
     chevron.height = 20;
     chevron.setAttribute("aria-hidden", "true");
     chevron.className = "task-card__chevron";
+    chevron.style.transform = ""; // collapsed = chevron-down pointing ∨
     row.appendChild(check);
     row.appendChild(t);
     row.appendChild(chevron);
     var body = document.createElement("div");
     body.className = "task-card__body";
+    body.hidden = true; // start collapsed
     var p = document.createElement("p");
     p.className = "task-card__body-text";
     p.textContent = card.text;
@@ -405,11 +408,11 @@
     root.appendChild(row);
     root.appendChild(body);
 
-    // Toggle collapse on row click
+    // Toggle collapse on row click — ∨ collapsed, ∧ expanded
     row.addEventListener("click", function() {
       var open = root.classList.toggle("is-open");
       body.hidden = !open;
-      chevron.style.transform = open ? "" : "rotate(-90deg)";
+      chevron.style.transform = open ? "rotate(180deg)" : "";
     });
 
     return root;

@@ -1146,7 +1146,7 @@ a:hover {
 }
 
 .task-card--completed-open .task-card__row {
-  background: var(--container-bg-primary);
+  background: var(--container-bg-secondary);
   cursor: pointer;
 }
 
@@ -1172,7 +1172,7 @@ a:hover {
 
 .task-card--completed-open .task-card__body {
   padding: 16px 20px 20px;
-  background: var(--container-bg-primary);
+  background: var(--container-bg-secondary);
   border-top: 1px solid var(--container-border-primary);
 }
 .task-card__chevron {
@@ -2432,7 +2432,7 @@ body.learn-panels-open {
   max-width: 1060px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 80px 60px;
+  padding: 0 80px 120px;
   box-sizing: border-box;
 }
 
@@ -2735,8 +2735,8 @@ body.learn-panels-open {
   background: none;
   border: none;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text-secondary);
   cursor: default;
   white-space: nowrap;
