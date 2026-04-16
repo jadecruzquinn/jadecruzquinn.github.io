@@ -77,9 +77,19 @@
     ],
     welcomeCall: [
       {
+        type: "expandable",
+        icon: "calendar",
+        title: "Your welcome call is coming up",
+        badge: "progress",
+        section: "In progress",
+        startOpen: false,
+        text: (function() { var d = new Date(); var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return "Your appointment is at 11:00am on " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + "."; })(),
+        actionLabel: "Reschedule",
+      },
+      {
         type: "completedOpen",
         title: "You answered questions for your expert",
-        section: "In progress",
+        section: "Done",
         text: "We received your response! Next, you\u2019ll have a welcome call with your expert.",
         actionLabel: "Edit responses",
       },
@@ -96,20 +106,10 @@
       },
       {
         type: "expandable",
-        icon: "calendar",
-        title: "Your welcome call is coming up",
-        badge: "upcoming",
-        section: "Up next",
-        startOpen: false,
-        text: (function() { var d = new Date(); var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return "Your appointment is at 11:00am on " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + "."; })(),
-        actionLabel: "Reschedule",
-      },
-      {
-        type: "expandable",
         icon: "thumbUp",
         title: "Your expert will review your books",
         badge: "upcoming",
-        section: null,
+        section: "Up next",
         startOpen: false,
         text: "If your expert needs more info, they'll reach out. You don't have to do anything right now.",
       },
@@ -149,7 +149,7 @@
         icon: "bankComplete",
         title: "You completed your welcome call",
         badge: null,
-        section: null,
+        section: "Done",
         startOpen: false,
         bgSecondary: true,
         text: "Your expert finished setting up your account. They\u2019ll reach out via chat if they need more info.",
@@ -165,16 +165,6 @@
       },
     ],
     taxFiling: [
-      {
-        type: "expandable",
-        icon: "thumbUp",
-        title: "Your expert reviewed your books",
-        badge: null,
-        section: "In progress",
-        startOpen: false,
-        bgSecondary: true,
-        text: "Your expert has reviewed your books and is ready to move forward.",
-      },
       {
         type: "expandable",
         icon: "doc",
@@ -194,6 +184,16 @@
         startOpen: false,
         text: "Your expert is ready when you are. Filing is included, at no extra cost.",
         actionLabel: "Start taxes",
+      },
+      {
+        type: "expandable",
+        icon: "thumbUp",
+        title: "Your expert reviewed your books",
+        badge: null,
+        section: "Done",
+        startOpen: false,
+        bgSecondary: true,
+        text: "Your expert has reviewed your books and is ready to move forward.",
       },
     ],
     subscriptionExpired: [],
@@ -225,6 +225,16 @@
     }
   }
 
+  function closeAllCompletedOpen() {
+    document.querySelectorAll("#js-task-cards .task-card--completed-open.is-open").forEach(function(card) {
+      card.classList.remove("is-open");
+      var sibPanel = card.querySelector(".task-card__panel");
+      var sibChevron = card.querySelector(".task-card__chevron");
+      if (sibPanel) { sibPanel.style.borderTop = "0"; sibPanel.style.maxHeight = "0"; }
+      if (sibChevron) sibChevron.style.transform = "";
+    });
+  }
+
   function toggle(root) {
     var willExpand = !root.classList.contains("is-expanded");
     if (willExpand) {
@@ -233,6 +243,7 @@
           setExpanded(card, false);
         }
       });
+      closeAllCompletedOpen();
       setExpanded(root, true);
       setTimeout(lockTaskColumnHeight, 160);
     } else {
@@ -418,18 +429,19 @@
     root.appendChild(panel);
 
     function closeSiblings() {
-      var host = root.closest(".task-section") || root.closest(".right-column-tasks") || root.parentNode;
-      host.querySelectorAll(".task-card--completed-open").forEach(function(sibling) {
+      // Close all other completedOpen cards globally
+      document.querySelectorAll("#js-task-cards .task-card--completed-open").forEach(function(sibling) {
         if (sibling !== root && sibling.classList.contains("is-open")) {
           sibling.classList.remove("is-open");
           var sibPanel = sibling.querySelector(".task-card__panel");
           var sibChevron = sibling.querySelector(".task-card__chevron");
-          if (sibPanel) {
-            sibPanel.style.borderTop = "0";
-            sibPanel.style.maxHeight = "0";
-          }
+          if (sibPanel) { sibPanel.style.borderTop = "0"; sibPanel.style.maxHeight = "0"; }
           if (sibChevron) sibChevron.style.transform = "";
         }
+      });
+      // Also close any open expandable cards
+      document.querySelectorAll("#js-task-cards [data-expandable].is-expanded").forEach(function(card) {
+        setExpanded(card, false);
       });
     }
 
