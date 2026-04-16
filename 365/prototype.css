@@ -237,7 +237,7 @@ a:hover {
   align-items: center;
   flex: 1;
   justify-content: center;
-  gap: 16px;
+  position: relative;
 }
 
 /* ——— Header workflow tabs ——— */
@@ -2733,9 +2733,11 @@ body.learn-panels-open {
   font-weight: 400;
   color: var(--text-secondary);
   cursor: default;
-  flex-shrink: 0;
-  margin-left: auto;
   white-space: nowrap;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .notifications-bar:not([hidden]) {
   display: flex;
