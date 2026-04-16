@@ -2452,7 +2452,7 @@ body.learn-panels-open {
   border: none;
   padding: 0;
   font-family: 'AvenirNext forINTUIT', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--link);
   cursor: pointer;
@@ -2727,6 +2727,9 @@ body.learn-panels-open {
   width: auto;
   white-space: nowrap;
   flex-shrink: 0;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 10px 28px;
 }
 
 
