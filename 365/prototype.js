@@ -1040,6 +1040,14 @@
       }
     });
 
+    // Open on any element with .js-billing-flow-open
+    document.body.addEventListener("click", function(e) {
+      var trigger = e.target.closest(".js-billing-flow-open");
+      if (!trigger) return;
+      e.preventDefault();
+      openFlow();
+    });
+
     if (backBtn) backBtn.addEventListener("click", closeFlow);
     if (placeOrderBtn) placeOrderBtn.addEventListener("click", function() {
       var onboardingBanner = document.querySelector(".info-banner--onboarding");
