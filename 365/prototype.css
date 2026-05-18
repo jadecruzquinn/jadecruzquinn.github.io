@@ -369,7 +369,11 @@ a:hover {
   width: 100%;
 }
 
-.dashboard-grid[data-workflow-state="onboarding"] .left-col-panel--onboarding {
+.dashboard-grid[data-workflow-state="onboarding"]:not([data-scheduled="true"]) .left-col-panel--onboarding {
+  display: flex;
+}
+
+.dashboard-grid[data-workflow-state="onboarding"][data-scheduled="true"] .left-col-panel--expert-welcome {
   display: flex;
 }
 
@@ -2754,6 +2758,11 @@ body.learn-panels-open {
 }
 .notifications-bar:not([hidden]) {
   display: flex;
+}
+@media (max-width: 1100px) {
+  .notifications-bar__label {
+    display: none;
+  }
 }
 @media (max-width: 700px) {
   .notifications-bar {

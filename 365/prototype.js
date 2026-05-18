@@ -4,6 +4,8 @@
 (function () {
   "use strict";
 
+  var welcomeCallScheduled = false;
+
   var ICON_PATHS = {
     video: "icons/video-call.svg",
     doc: "icons/document.svg",
@@ -80,8 +82,8 @@
         type: "expandable",
         icon: "calendar",
         title: "Your welcome call is coming up",
-        badge: "progress",
-        section: "In progress",
+        badge: "todo",
+        section: "To do",
         startOpen: false,
         text: (function() { var d = new Date(); var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; return "Your appointment is at 11:00am on " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + "."; })(),
         actionLabel: "Reschedule",
@@ -89,7 +91,7 @@
       {
         type: "completedOpen",
         title: "You answered questions for your expert",
-        section: "Done",
+        section: null,
         text: "We received your response! Next, you\u2019ll have a welcome call with your expert.",
         actionLabel: "Edit responses",
       },
@@ -131,7 +133,7 @@
         badge: "progress",
         section: "In progress",
         startOpen: false,
-        text: "Sit tight \u2013 your expert is on it! You can reach out if you have questions.",
+        text: "Sit tight\u2014your expert is on it! You can reach out if you have questions.",
         actionLabel: "Start a chat",
       },
       {
@@ -143,16 +145,6 @@
         startOpen: false,
         text: "Get quarterly estimates and discuss ways to optimize your tax strategy with your expert.",
         actionLabel: "Schedule a call",
-      },
-      {
-        type: "expandable",
-        icon: "bankComplete",
-        title: "You completed your welcome call",
-        badge: null,
-        section: "Done",
-        startOpen: false,
-        bgSecondary: true,
-        text: "Your expert finished setting up your account. They\u2019ll reach out via chat if they need more info.",
       },
       {
         type: "expandable",
@@ -187,10 +179,10 @@
       },
       {
         type: "expandable",
-        icon: "thumbUp",
+        icon: "bankComplete",
         title: "Your expert reviewed your books",
         badge: null,
-        section: "Done",
+        section: null,
         startOpen: false,
         bgSecondary: true,
         text: "Your expert has reviewed your books and is ready to move forward.",
@@ -354,6 +346,9 @@
       if (card.actionLabel === "Go to docs") {
         action.className += " js-go-docs";
       }
+      if (card.actionLabel === "Start a chat") {
+        action.className += " btn--expert-chat";
+      }
       inner.appendChild(action);
     }
 
@@ -476,6 +471,11 @@
     var grid = document.querySelector(".dashboard-grid");
     if (grid) {
       grid.setAttribute("data-workflow-state", stateKey);
+      if (welcomeCallScheduled) {
+        grid.setAttribute("data-scheduled", "true");
+      } else {
+        grid.removeAttribute("data-scheduled");
+      }
     }
     var dashView = document.getElementById("dashboard-view");
     if (dashView) {
@@ -538,6 +538,25 @@
     if (col) col.style.minHeight = "";
     var items = STATE_CARDS[stateKey];
     if (!items) return;
+
+    if (stateKey === "onboarding" && welcomeCallScheduled) {
+      var apptText = (function() {
+        var d = new Date();
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        return "Your appointment is at 11:00am on " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + ".";
+      })();
+      items = items.slice();
+      items[0] = {
+        type: "expandable",
+        icon: "calendar",
+        title: "Your welcome call is coming up",
+        badge: "todo",
+        section: "To do",
+        startOpen: false,
+        text: apptText,
+        actionLabel: "Reschedule",
+      };
+    }
 
     var currentSection = null;
     var sectionEl = null;
@@ -759,6 +778,13 @@
     root.addEventListener("click", function (e) {
       if (e.target.closest("[data-connect-drawer-dismiss]")) {
         window.closeCallModal();
+      }
+      var btn = e.target.closest(".connect-option-card__btn");
+      if (btn) {
+        welcomeCallScheduled = true;
+        var grid = document.querySelector(".dashboard-grid");
+        var currentState = grid && grid.getAttribute("data-workflow-state");
+        if (currentState) setWorkflowState(currentState);
       }
     });
 
@@ -1219,10 +1245,10 @@
       drawer.setAttribute("aria-hidden", "true");
     }
 
-    // Open on "Chat with your expert" button
+    // Open on any element with the expert-chat trigger class
     document.body.addEventListener("click", function(e) {
-      var btn = e.target.closest("button");
-      if (btn && btn.classList.contains("btn--expert-chat")) {
+      var trigger = e.target.closest(".btn--expert-chat");
+      if (trigger) {
         e.preventDefault();
         openDrawer();
       }
