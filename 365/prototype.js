@@ -1041,7 +1041,13 @@
     });
 
     if (backBtn) backBtn.addEventListener("click", closeFlow);
-    if (placeOrderBtn) placeOrderBtn.addEventListener("click", closeFlow);
+    if (placeOrderBtn) placeOrderBtn.addEventListener("click", function() {
+      var onboardingBanner = document.querySelector(".info-banner--onboarding");
+      var welcomeBanner = document.querySelector(".info-banner--welcome-call");
+      if (onboardingBanner) onboardingBanner.hidden = true;
+      if (welcomeBanner) welcomeBanner.hidden = true;
+      closeFlow();
+    });
 
     // Close when clicking left nav items or logo
     document.body.addEventListener("click", function(e) {
