@@ -240,19 +240,6 @@ a:hover {
   position: relative;
 }
 
-.header__actions:has(#notifications-bar:not([hidden])) .state-switcher-wrap {
-  padding-right: 140px;
-}
-@media (max-width: 1280px) {
-  .header__actions:has(#notifications-bar:not([hidden])) .state-switcher-wrap {
-    padding-right: 44px;
-  }
-}
-@media (max-width: 700px) {
-  .header__actions:has(#notifications-bar:not([hidden])) .state-switcher-wrap {
-    padding-right: 0;
-  }
-}
 
 /* ——— Header workflow tabs ——— */
 .state-switcher-wrap {
@@ -2756,8 +2743,8 @@ body.learn-panels-open {
   display: none;
   align-items: center;
   gap: 6px;
-  padding: 0 4px;
-  background: none;
+  padding: 0 4px 0 20px;
+  background: var(--container-bg-primary);
   border: none;
   font-family: 'AvenirNext forINTUIT', sans-serif;
   font-size: 14px;
@@ -2769,9 +2756,20 @@ body.learn-panels-open {
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+  height: 100%;
 }
 .notifications-bar:not([hidden]) {
   display: flex;
+}
+.notifications-bar::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  background: linear-gradient(to right, transparent, var(--container-bg-primary));
+  pointer-events: none;
 }
 @media (max-width: 1280px) {
   .notifications-bar__label {
